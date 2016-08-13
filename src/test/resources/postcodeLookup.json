@@ -1,0 +1,35 @@
+{
+	"status": 200,
+	"result": {
+		"postcode": "BS34 7NP",
+		"quality": 1,
+		"eastings": 360605,
+		"northings": 178655,
+		"country": "England",
+		"nhs_ha": "South West",
+		"longitude": -2.56899282995555,
+		"latitude": 51.5054493186496,
+		"parliamentary_constituency": "Filton and Bradley Stoke",
+		"european_electoral_region": "South West",
+		"primary_care_trust": "South Gloucestershire",
+		"region": "South West",
+		"lsoa": "South Gloucestershire 018D",
+		"msoa": "South Gloucestershire 018",
+		"incode": "7NP",
+		"outcode": "BS34",
+		"admin_district": "South Gloucestershire",
+		"parish": "Filton",
+		"admin_county": null,
+		"admin_ward": "Filton",
+		"ccg": "NHS South Gloucestershire",
+		"nuts": "Bath and North East Somerset, North Somerset and South Gloucestershire",
+		"codes": {
+			"admin_district": "E06000025",
+			"admin_county": "E99999999",
+			"admin_ward": "E05002055",
+			"parish": "E04001052",
+			"ccg": "E38000155",
+			"nuts": "UKK12"
+		}
+	}
+}
