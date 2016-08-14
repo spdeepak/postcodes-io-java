@@ -418,6 +418,8 @@ public class PostCode {
     }
 
     /**
+     * Generate {@link PostCode} from the given {@link PostcodeLookup}
+     * 
      * @param postcodeLookup
      * @return
      */
@@ -425,85 +427,91 @@ public class PostCode {
         JSONObject json;
         try {
             json = JsonFetcher.urlToJson(new URL(postcodeLookup.getUrl()));
-            if (json.has("result")) {
-                json = json.getJSONObject("result");
-                pc = new PostCode();
-                if (json.has("postcode") && !json.get("postcode").equals(JSONObject.NULL)) {
-                    pc.postcode = json.getString("postcode");
-                }
-                if (json.has("quality") && !json.get("quality").equals(JSONObject.NULL)) {
-                    pc.quality = json.getInt("quality");
-                }
-                if (json.has("eastings") && !json.get("eastings").equals(JSONObject.NULL)) {
-                    pc.eastings = json.getInt("eastings");
-                }
-                if (json.has("northings") && !json.get("northings").equals(JSONObject.NULL)) {
-                    pc.northings = json.getInt("northings");
-                }
-                if (json.has("country") && !json.get("country").equals(JSONObject.NULL)) {
-                    pc.country = json.getString("country");
-                }
-                if (json.has("nhs_ha") && !json.get("nhs_ha").equals(JSONObject.NULL)) {
-                    pc.nhs_ha = json.getString("nhs_ha");
-                }
-                if (json.has("longitude") && !json.get("longitude").equals(JSONObject.NULL)) {
-                    pc.longitude = json.getDouble("longitude");
-                }
-                if (json.has("latitude") && !json.get("latitude").equals(JSONObject.NULL)) {
-                    pc.latitude = json.getDouble("latitude");
-                }
-                if (json.has("parliamentary_constituency")
-                        && !json.get("parliamentary_constituency").equals(JSONObject.NULL)) {
-                    pc.parliamentary_constituency = json.getString("parliamentary_constituency");
-                }
-                if (json.has("european_electoral_region")
-                        && !json.get("european_electoral_region").equals(JSONObject.NULL)) {
-                    pc.european_electoral_region = json.getString("european_electoral_region");
-                }
-                if (json.has("primary_care_trust") && !json.get("primary_care_trust").equals(JSONObject.NULL)) {
-                    pc.primary_care_trust = json.getString("primary_care_trust");
-                }
-                if (json.has("region") && !json.get("region").equals(JSONObject.NULL)) {
-                    pc.region = json.getString("region");
-                }
-                if (json.has("lsoa") && !json.get("lsoa").equals(JSONObject.NULL)) {
-                    pc.lsoa = json.getString("lsoa");
-                }
-                if (json.has("msoa") && !json.get("msoa").equals(JSONObject.NULL)) {
-                    pc.msoa = json.getString("msoa");
-                }
-                if (json.has("incode") && !json.get("incode").equals(JSONObject.NULL)) {
-                    pc.incode = json.getString("incode");
-                }
-                if (json.has("outcode") && !json.get("outcode").equals(JSONObject.NULL)) {
-                    pc.outcode = json.getString("outcode");
-                }
-                if (json.has("admin_district") && !json.get("admin_district").equals(JSONObject.NULL)) {
-                    pc.admin_district = json.getString("admin_district");
-                }
-                if (json.has("parish") && !json.get("parish").equals(JSONObject.NULL)) {
-                    pc.parish = json.getString("parish");
-                }
-                if (json.has("admin_county") && !json.get("admin_county").equals(JSONObject.NULL)) {
-                    pc.admin_county = json.getBoolean("admin_county");
-                }
-                if (json.has("admin_ward") && !json.get("admin_ward").equals(JSONObject.NULL)) {
-                    pc.admin_ward = json.getString("admin_ward");
-                }
-                if (json.has("ccg") && !json.get("ccg").equals(JSONObject.NULL)) {
-                    pc.ccg = json.getString("ccg");
-                }
-                if (json.has("nuts") && !json.get("nuts").equals(JSONObject.NULL)) {
-                    pc.nuts = json.getString("nuts");
-                }
-                generateCodes(json);
-            } else {
-                throw new IllegalArgumentException("Postcode not found");
-            }
+            generateResult(json);
+            generateCodes(json.getJSONObject("result"));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
         return pc;
+    }
+
+    private static void generateResult(JSONObject json) {
+        if (json.has("result")) {
+            json = json.getJSONObject("result");
+            pc = new PostCode();
+            if (isJSONPresentAndNotNull(json, "postcode")) {
+                pc.postcode = json.getString("postcode");
+            }
+            if (isJSONPresentAndNotNull(json, "quality")) {
+                pc.quality = json.getInt("quality");
+            }
+            if (isJSONPresentAndNotNull(json, "eastings")) {
+                pc.eastings = json.getInt("eastings");
+            }
+            if (isJSONPresentAndNotNull(json, "northings")) {
+                pc.northings = json.getInt("northings");
+            }
+            if (isJSONPresentAndNotNull(json, "country")) {
+                pc.country = json.getString("country");
+            }
+            if (isJSONPresentAndNotNull(json, "nhs_ha")) {
+                pc.nhs_ha = json.getString("nhs_ha");
+            }
+            if (isJSONPresentAndNotNull(json, "longitude")) {
+                pc.longitude = json.getDouble("longitude");
+            }
+            if (isJSONPresentAndNotNull(json, "latitude")) {
+                pc.latitude = json.getDouble("latitude");
+            }
+            if (isJSONPresentAndNotNull(json, "parliamentary_constituency")) {
+                pc.parliamentary_constituency = json.getString("parliamentary_constituency");
+            }
+            if (isJSONPresentAndNotNull(json, "european_electoral_region")) {
+                pc.european_electoral_region = json.getString("european_electoral_region");
+            }
+            if (isJSONPresentAndNotNull(json, "primary_care_trust")) {
+                pc.primary_care_trust = json.getString("primary_care_trust");
+            }
+            if (isJSONPresentAndNotNull(json, "region")) {
+                pc.region = json.getString("region");
+            }
+            if (isJSONPresentAndNotNull(json, "lsoa")) {
+                pc.lsoa = json.getString("lsoa");
+            }
+            if (isJSONPresentAndNotNull(json, "msoa")) {
+                pc.msoa = json.getString("msoa");
+            }
+            if (isJSONPresentAndNotNull(json, "incode")) {
+                pc.incode = json.getString("incode");
+            }
+            if (isJSONPresentAndNotNull(json, "outcode")) {
+                pc.outcode = json.getString("outcode");
+            }
+            if (isJSONPresentAndNotNull(json, "admin_district")) {
+                pc.admin_district = json.getString("admin_district");
+            }
+            if (isJSONPresentAndNotNull(json, "parish")) {
+                pc.parish = json.getString("parish");
+            }
+            if (isJSONPresentAndNotNull(json, "admin_county")) {
+                pc.admin_county = json.getBoolean("admin_county");
+            }
+            if (isJSONPresentAndNotNull(json, "admin_ward")) {
+                pc.admin_ward = json.getString("admin_ward");
+            }
+            if (isJSONPresentAndNotNull(json, "ccg")) {
+                pc.ccg = json.getString("ccg");
+            }
+            if (isJSONPresentAndNotNull(json, "nuts")) {
+                pc.nuts = json.getString("nuts");
+            }
+        } else {
+            throw new IllegalArgumentException("Postcode not found");
+        }
+    }
+
+    private static boolean isJSONPresentAndNotNull(JSONObject json, String jsonString) {
+        return json.has(jsonString) && !json.get(jsonString).equals(JSONObject.NULL);
     }
 
     private static void generateCodes(JSONObject json) {
