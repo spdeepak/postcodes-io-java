@@ -88,11 +88,43 @@ public class JsonFetcherTest {
         JSONObject json = JsonFetcher.postURLToJson(new URL(url), jsonO);
         assertEquals(200, json.getInt("status"));
         JSONArray jsonArray = json.getJSONArray("result");
-        if (jsonArray.getJSONObject(0).getJSONObject("result").getString("postcode").equals("BS34 7NP")) {
-            test(jsonArray.getJSONObject(0).getJSONObject("result"));
-        } else {
-            test(jsonArray.getJSONObject(1).getJSONObject("result"));
+        for (int i = 0; i < 2; i++) {
+            if (jsonArray.getJSONObject(i).getJSONObject("result").getString("postcode").equals("BS34 7NP")) {
+                test(jsonArray.getJSONObject(i).getJSONObject("result"));
+            } else {
+                JSONObject result = jsonArray.getJSONObject(i).getJSONObject("result");
+                assertEquals("ST4 2EU", (result.getString("postcode")));
+                assertEquals(1, (result.getInt("quality")));
+                assertEquals(387884, (result.getInt("eastings")));
+                assertEquals(346021, (result.getInt("northings")));
+                assertEquals("England", (result.getString("country")));
+                assertEquals("West Midlands", (result.getString("nhs_ha")));
+                assertEquals(-2.18203015918483, result.getDouble("longitude"), 1);
+                assertEquals(53.0113602891873, result.getDouble("latitude"), 2);
+                assertEquals("Stoke-on-Trent Central", (result.getString("parliamentary_constituency")));
+                assertEquals("West Midlands", (result.getString("european_electoral_region")));
+                assertEquals("Stoke on Trent", (result.getString("primary_care_trust")));
+                assertEquals("West Midlands", (result.getString("region")));
+                assertEquals("Stoke-on-Trent 016E", (result.getString("lsoa")));
+                assertEquals("Stoke-on-Trent 016", (result.getString("msoa")));
+                assertEquals("2EU", (result.getString("incode")));
+                assertEquals("ST4", (result.getString("outcode")));
+                assertEquals("Stoke-on-Trent", (result.getString("admin_district")));
+                assertEquals("Stoke-on-Trent, unparished area", (result.getString("parish")));
+                assertEquals(JSONObject.NULL, result.get("admin_county"));
+                assertEquals("Hanley Park and Shelton", (result.getString("admin_ward")));
+                assertEquals("NHS Stoke on Trent", (result.getString("ccg")));
+                assertEquals("Stoke-on-Trent", (result.getString("nuts")));
+                JSONObject codes = result.getJSONObject("codes");
+                assertEquals("E06000021", (codes.getString("admin_district")));
+                assertEquals("E99999999", (codes.getString("admin_county")));
+                assertEquals("E05008734", (codes.getString("admin_ward")));
+                assertEquals("E43000017", (codes.getString("parish")));
+                assertEquals("E38000175", (codes.getString("ccg")));
+                assertEquals("UKG23", (codes.getString("nuts")));
+            }
         }
+
     }
 
 }

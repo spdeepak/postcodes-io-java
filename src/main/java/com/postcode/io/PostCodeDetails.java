@@ -4,12 +4,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.postcode.io.initializers.PostcodeLookup;
 import com.postcode.io.json.JsonFetcher;
 
 /**
- * {@link PostCode} Explaination<br/>
+ * {@link PostCodeDetails} Explaination<br/>
  * <br/>
  * For example: <b>BS34 7NP</b><br/>
  * <b>BS</b>: Area<br/>
@@ -20,7 +22,9 @@ import com.postcode.io.json.JsonFetcher;
  * @author Deepak
  *
  */
-public class PostCode {
+public class PostCodeDetails {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PostCodeDetails.class);
 
     private String postcode;
 
@@ -68,9 +72,9 @@ public class PostCode {
 
     private Codes codes;
 
-    private static PostCode pc;
+    private static PostCodeDetails pc;
 
-    private PostCode() {
+    private PostCodeDetails() {
     }
 
     /**
@@ -104,6 +108,12 @@ public class PostCode {
             this.nuts = nuts;
         }
 
+        /**
+         * <b>District.</b>The current district/unitary authority to which the postcode has been
+         * assigned.
+         * 
+         * @return admin_district
+         */
         public String getAdmin_district() {
             return admin_district;
         }
@@ -111,7 +121,7 @@ public class PostCode {
         /**
          * <b>County.</b> The current county to which the postcode has been assigned.
          * 
-         * @return
+         * @return admin_county
          */
         public String getAdmin_county() {
             return admin_county;
@@ -121,7 +131,7 @@ public class PostCode {
          * <b>Ward.</b> The current administrative/electoral area to which the postcode has been
          * assigned.
          * 
-         * @return
+         * @return admin_ward
          */
         public String getAdmin_ward() {
             return admin_ward;
@@ -132,7 +142,7 @@ public class PostCode {
          * England is the parish (also known as 'civil parish'); the equivalent units in Wales are
          * communities.
          * 
-         * @return
+         * @return parish
          */
         public String getParish() {
             return parish;
@@ -143,7 +153,7 @@ public class PostCode {
          * organisations set up by the Health and Social Care Act 2012 to organise the delivery of
          * NHS services in England.
          * 
-         * @return
+         * @return ccg
          */
         public String getCcg() {
             return ccg;
@@ -159,7 +169,7 @@ public class PostCode {
          * Local Enterprise Regions. NUTS levels 1-3 are frozen for a minimum of three years and
          * NUTS levels 4 and 5 are now local Administrative Units (LAU) levels 1 and 2 respectively.
          * 
-         * @return
+         * @return nuts
          */
         public String getNuts() {
             return nuts;
@@ -171,7 +181,7 @@ public class PostCode {
      * Islands and the Isle of Man, received monthly from Royal Mail. 2, 3 or 4-character outward
      * code, single space and 3-character inward code.
      * 
-     * @return
+     * @return postcode
      */
     public String getPostcode() {
         return postcode;
@@ -190,7 +200,7 @@ public class PostCode {
      * reference1 <br/>
      * 9 = no grid reference available
      * 
-     * @return
+     * @return quality
      */
     public Integer getQuality() {
         return quality;
@@ -201,7 +211,7 @@ public class PostCode {
      * blank for postcodes in the Channel Islands and the Isle of Man. Grid references for postcodes
      * in Northern Ireland relate to the Irish Grid system.
      * 
-     * @return
+     * @return eastings
      */
     public Integer getEastings() {
         return eastings;
@@ -212,7 +222,7 @@ public class PostCode {
      * blank for postcodes in the Channel Islands and the Isle of Man. Grid references for postcodes
      * in Northern Ireland relate to the Irish Grid system.
      * 
-     * @return
+     * @return northings
      */
     public Integer getNorthings() {
         return northings;
@@ -223,7 +233,7 @@ public class PostCode {
      * countries of the United Kingdom or the Channel Islands or the Isle of Man) to which each
      * postcode is assigned.
      * 
-     * @return
+     * @return country
      */
     public String getCountry() {
         return country;
@@ -232,7 +242,7 @@ public class PostCode {
     /**
      * <b>Strategic Health Authority.</b> The health area code for the postcode.
      * 
-     * @return
+     * @return nhs_ha
      */
     public String getNhs_ha() {
         return nhs_ha;
@@ -242,7 +252,7 @@ public class PostCode {
      * 
      * <b>Longitude.</b> The WGS84 longitude given the Postcode's national grid reference
      * 
-     * @return
+     * @return longitude
      */
     public Double getLongitude() {
         return longitude;
@@ -251,7 +261,7 @@ public class PostCode {
     /**
      * <b>Latitude.</b> The WGS84 latitude given the Postcode's national grid reference
      * 
-     * @return
+     * @return latitude
      */
     public Double getLatitude() {
         return latitude;
@@ -261,7 +271,7 @@ public class PostCode {
      * <b>Westminster Parliamentary Constituency.</b> The Westminster Parliamentary Constituency
      * code for each postcode.
      * 
-     * @return
+     * @return parliamentary_constituency
      */
     public String getParliamentary_constituency() {
         return parliamentary_constituency;
@@ -270,7 +280,7 @@ public class PostCode {
     /**
      * <b>European Electoral Region (EER).</b> The European Electoral Region code for each postcode.
      * 
-     * @return
+     * @return european_electoral_region
      */
     public String getEuropean_electoral_region() {
         return european_electoral_region;
@@ -283,7 +293,7 @@ public class PostCode {
      * (LHB)/ community health partnership (CHP)/ local commissioning group (LCG)/ primary
      * healthcare directorate (PHD).
      * 
-     * @return
+     * @return primary_care_trust
      */
     public String getPrimary_care_trust() {
         return primary_care_trust;
@@ -295,7 +305,7 @@ public class PostCode {
      * subdivisions of England and also the areas in which the Government Offices for the Regions
      * fulfilled their role. Each GOR covered a number of local authorities.
      * 
-     * @return
+     * @return region
      */
     public String getRegion() {
         return region;
@@ -305,7 +315,7 @@ public class PostCode {
      * <b>2011Census lower layer super output area (LSOA).</b> The 2011 Census lower layer SOA code
      * for England and Wales, SOA code for Northern Ireland and data zone code for Scotland.
      * 
-     * @return
+     * @return lsoa
      */
     public String getLsoa() {
         return lsoa;
@@ -315,7 +325,7 @@ public class PostCode {
      * <b>2011 Census middle layer super output area (MSOA).</b> The 2011 Census middle layer SOA
      * (MSOA) code for England and Wales and intermediate zone for Scotland.
      * 
-     * @return
+     * @return msoa
      */
     public String getMsoa() {
         return msoa;
@@ -324,7 +334,7 @@ public class PostCode {
     /**
      * <b>Unit Code in Postcode
      * 
-     * @return
+     * @return incode
      */
     public String getIncode() {
         return incode;
@@ -333,7 +343,7 @@ public class PostCode {
     /**
      * <b>District Code in Postcode
      * 
-     * @return
+     * @return outcode
      */
     public String getOutcode() {
         return outcode;
@@ -343,7 +353,7 @@ public class PostCode {
      * <b>District.</b>The current district/unitary authority to which the postcode has been
      * assigned.
      * 
-     * @return
+     * @return admin_district
      */
     public String getAdmin_district() {
         return admin_district;
@@ -354,7 +364,7 @@ public class PostCode {
      * England is the parish (also known as 'civil parish'); the equivalent units in Wales are
      * communities.
      * 
-     * @return
+     * @return parish
      */
     public String getParish() {
         return parish;
@@ -363,7 +373,7 @@ public class PostCode {
     /**
      * <b>County.</b> The current county to which the postcode has been assigned.
      * 
-     * @return
+     * @return admin_county
      */
     public boolean getAdmin_county() {
         return admin_county;
@@ -373,7 +383,7 @@ public class PostCode {
      * <b>Ward.</b> The current administrative/electoral area to which the postcode has been
      * assigned.
      * 
-     * @return
+     * @return admin_ward
      */
     public String getAdmin_ward() {
         return admin_ward;
@@ -384,7 +394,7 @@ public class PostCode {
      * organisations set up by the Health and Social Care Act 2012 to organise the delivery of NHS
      * services in England.
      * 
-     * @return
+     * @return ccg
      */
     public String getCcg() {
         return ccg;
@@ -400,7 +410,7 @@ public class PostCode {
      * are frozen for a minimum of three years and NUTS levels 4 and 5 are now local Administrative
      * Units (LAU) levels 1 and 2 respectively.
      * 
-     * @return
+     * @return nuts
      */
     public String getNuts() {
         return nuts;
@@ -411,26 +421,28 @@ public class PostCode {
      * code known as an ONS Code or GSS Code. This is currently only available for districts,
      * parishes, counties, CCGs, NUTS and wards.
      * 
-     * @return
+     * @return codes
      */
     public Codes getCodes() {
         return codes;
     }
 
     /**
-     * Generate {@link PostCode} from the given {@link PostcodeLookup}
+     * Generate {@link PostCodeDetails} from the given {@link PostcodeLookup}
      * 
      * @param postcodeLookup
-     * @return
+     * @return {@link PostCodeDetails}
+     * @throws MalformedURLException
      */
-    public static PostCode generate(PostcodeLookup postcodeLookup) {
+    public static PostCodeDetails generate(PostcodeLookup postcodeLookup) throws MalformedURLException {
         JSONObject json;
         try {
             json = JsonFetcher.urlToJson(new URL(postcodeLookup.getUrl()));
             generateResult(json);
             generateCodes(json.getJSONObject("result"));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            LOGGER.info("Error with URL");
+            throw new MalformedURLException("Error with URL");
         }
         return pc;
     }
@@ -438,7 +450,7 @@ public class PostCode {
     private static void generateResult(JSONObject json) {
         if (json.has("result")) {
             json = json.getJSONObject("result");
-            pc = new PostCode();
+            pc = new PostCodeDetails();
             if (isJSONPresentAndNotNull(json, "postcode")) {
                 pc.postcode = json.getString("postcode");
             }
@@ -511,6 +523,7 @@ public class PostCode {
     }
 
     private static boolean isJSONPresentAndNotNull(JSONObject json, String jsonString) {
+        LOGGER.info("Checking whether {} has {}", json, jsonString);
         return json.has(jsonString) && !json.get(jsonString).equals(JSONObject.NULL);
     }
 
