@@ -204,7 +204,7 @@ public class ReverseGeocoding {
         return radius;
     }
 
-    public static boolean isWideSearch() {
+    private static boolean isWideSearch() {
         return wideSearch;
     }
 

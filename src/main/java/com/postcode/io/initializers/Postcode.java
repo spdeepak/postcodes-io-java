@@ -66,7 +66,7 @@ public class Postcode {
      * @throws MalformedURLException
      */
     public PostcodeLookup build() throws MalformedURLException {
-        if (postcode != null) {
+        if (postcode != null && !postcode.trim().isEmpty()) {
             return new PostcodeLookup(new URL(LOOKUP_URL.toString().concat(postcode)), postcode, postcodes);
         } else if (postcode == null && postcodes != null) {
             return new PostcodeLookup(new URL(LOOKUP_URL.toString()), postcode, postcodes);

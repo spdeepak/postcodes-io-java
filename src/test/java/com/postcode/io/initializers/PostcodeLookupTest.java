@@ -49,7 +49,6 @@ public class PostcodeLookupTest {
                 .urlToJson(new File(System.getProperty("user.dir").concat("/src/test/resources/postcodeLookup.json"))
                         .toURI().toURL()),
                 PostcodeLookup.postcode("bs347np").asJson(), JSONCompareMode.STRICT);
-
     }
 
     @Test
@@ -87,6 +86,13 @@ public class PostcodeLookupTest {
         assertTrue(PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().has("status"));
         assertTrue(
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().getInt("status") == 200);
+        JSONAssert.assertEquals(
+                JsonFetcher.urlToJson(new File(
+                        System.getProperty("user.dir").concat("/src/test/resources/reverseGeocodingWithAllParams.json"))
+                                .toURI().toURL()),
+                PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
+                        .wideSearch(true).asjson(),
+                JSONCompareMode.LENIENT);
     }
 
 }
