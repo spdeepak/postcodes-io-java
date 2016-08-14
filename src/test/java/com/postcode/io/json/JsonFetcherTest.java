@@ -7,8 +7,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Test;
+
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 /**
  * @author Deepak
@@ -17,9 +21,17 @@ import org.junit.Test;
 public class JsonFetcherTest {
 
     @Test
-    public void testByURL() throws MalformedURLException {
+    public void testByURL() throws MalformedURLException, UnirestException {
         JSONObject json = JsonFetcher.urlToJson(new URL("http://api.postcodes.io/postcodes/bs347np"));
-        test(json);
+        Unirest.post("http://api.postcodes.io/postcodes").header("accept", "application/json")
+                .queryString("postcodes", new String[] { "BS34 7NP" }).field("postcodes", new String[] { "BS34 7NP" })
+                .asJson();
+        assertTrue(json.has("status"));
+        assertTrue(json.has("result"));
+        test(json.getJSONObject("result"));
+        Unirest.post("http://api.postcodes.io/postcodes").header("accept", "application/json")
+                .field("postcodes", "OX49 5NU").field("postcodes", "BS34 7NP").asJson().getBody().getObject();
+
     }
 
     @Test
@@ -27,13 +39,12 @@ public class JsonFetcherTest {
         JSONObject json = JsonFetcher
                 .urlToJson(new File(System.getProperty("user.dir").concat("/src/test/resources/postcodeLookup.json"))
                         .toURI().toURL());
-        test(json);
-    }
-
-    public void test(JSONObject json) {
         assertTrue(json.has("status"));
         assertTrue(json.has("result"));
-        JSONObject result = json.getJSONObject("result");
+        test(json.getJSONObject("result"));
+    }
+
+    public void test(JSONObject result) {
         assertEquals("BS34 7NP", (result.getString("postcode")));
         assertEquals(1, (result.getInt("quality")));
         assertEquals(360605, (result.getInt("eastings")));
@@ -64,6 +75,24 @@ public class JsonFetcherTest {
         assertEquals("E04001052", (codes.getString("parish")));
         assertEquals("E38000155", (codes.getString("ccg")));
         assertEquals("UKK12", (codes.getString("nuts")));
+    }
+
+    @Test
+    public void testPostURLToJson() throws Exception {
+        JSONObject jsonO = new JSONObject();
+        JSONArray ja = new JSONArray();
+        ja.put("BS34 7NP");
+        ja.put("ST4 2EU");
+        jsonO.put("postcodes", ja);
+        String url = "http://api.postcodes.io/postcodes/";
+        JSONObject json = JsonFetcher.postURLToJson(new URL(url), jsonO);
+        assertEquals(200, json.getInt("status"));
+        JSONArray jsonArray = json.getJSONArray("result");
+        if (jsonArray.getJSONObject(0).getJSONObject("result").getString("postcode").equals("BS34 7NP")) {
+            test(jsonArray.getJSONObject(0).getJSONObject("result"));
+        } else {
+            test(jsonArray.getJSONObject(1).getJSONObject("result"));
+        }
     }
 
 }
