@@ -1,7 +1,6 @@
 package com.postcode.io.initializers;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.json.JsonFetcher;
 
 /**
@@ -81,7 +82,7 @@ public class ReverseGeocoding {
         return this;
     }
 
-    public JSONObject asjson() throws MalformedURLException, IOException {
+    public JSONObject asjson() throws IOException, UnirestException {
         String url = "";
         url = url.concat("lon=").concat(String.valueOf(longitude));
         url = url.concat("&lat=").concat(String.valueOf(latitude));
@@ -94,11 +95,25 @@ public class ReverseGeocoding {
         if (isWideSearch()) {
             url = url.concat("&widesearch=").concat(String.valueOf(wideSearch));
         }
-        if (json != null) {
-            return JsonFetcher.postURLToJson(new URL(LOOKUP_URL), json);
-        } else {
-            return JsonFetcher.urlToJson(new URL(LOOKUP_URL.concat(url)));
+        try {
+            if (json != null) {
+                return JsonFetcher.postURLToJson(new URL(LOOKUP_URL), json);
+            } else {
+                return Unirest.get(LOOKUP_URL.concat(url)).asJson().getBody().getObject();
+            }
+        } finally {
+            clear();
         }
+    }
+
+    private void clear() {
+        ReverseGeocoding.longitude = null;
+        ReverseGeocoding.latitude = null;
+        ReverseGeocoding.limit = 0;
+        ReverseGeocoding.radius = 0;
+        ReverseGeocoding.wideSearch = false;
+        ReverseGeocoding.json = null;
+        ReverseGeocoding.reverses = null;
     }
 
     private JSONObject createGeocodings(List<Reverse> reverses) {

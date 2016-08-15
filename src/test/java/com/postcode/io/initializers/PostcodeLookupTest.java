@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,12 +88,11 @@ public class PostcodeLookupTest {
         assertTrue(
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().getInt("status") == 200);
         JSONAssert.assertEquals(
-                JsonFetcher.urlToJson(new File(
-                        System.getProperty("user.dir").concat("/src/test/resources/reverseGeocodingWithAllParams.json"))
-                                .toURI().toURL()),
+                JsonFetcher.urlToJson(
+                        new URL("https://api.postcodes.io/postcodes?lon=0.629834723775309&lat=51.7923246977375&limit=100&radius=2000&widesearch=true")),
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
                         .wideSearch(true).asjson(),
-                JSONCompareMode.LENIENT);
+                JSONCompareMode.STRICT);
     }
 
 }

@@ -49,13 +49,23 @@ public class Postcode {
      * @throws Exception
      */
     public JSONObject asJson() throws Exception {
-        if (!StringUtils.isEmpty(postcode)) {
-            return JsonFetcher.urlToJson(new URL(LOOKUP_URL.toString().concat(postcode)));
-        } else if (json != null) {
-            return JsonFetcher.postURLToJson(new URL(LOOKUP_URL.toString()), json);
-        } else {
-            throw new IllegalArgumentException("postcode/postcodes are mandatory");
+        try {
+            if (!StringUtils.isEmpty(postcode)) {
+                return JsonFetcher.urlToJson(new URL(LOOKUP_URL.toString().concat(postcode)));
+            } else if (json != null) {
+                return JsonFetcher.postURLToJson(new URL(LOOKUP_URL.toString()), json);
+            } else {
+                throw new IllegalArgumentException("postcode/postcodes are mandatory");
+            }
+        } finally {
+            clear();
         }
+    }
+
+    private void clear() {
+        setJson(null);
+        setPostcode(null);
+        setPostcodes(null);
     }
 
     /**
@@ -73,6 +83,18 @@ public class Postcode {
         } else {
             throw new IllegalArgumentException("postcode/postcodes are mandatory");
         }
+    }
+
+    private void setPostcode(String postcode) {
+        this.postcode = postcode;
+    }
+
+    private void setPostcodes(String[] postcodes) {
+        this.postcodes = postcodes;
+    }
+
+    private void setJson(JSONObject json) {
+        this.json = json;
     }
 
 }
