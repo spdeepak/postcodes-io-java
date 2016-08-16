@@ -98,16 +98,6 @@ public class PostCodeDetails {
         private Codes() {
         }
 
-        private Codes(String admin_district, String admin_county, String admin_ward, String parish, String ccg,
-                String nuts) {
-            this.admin_district = admin_district;
-            this.admin_county = admin_county;
-            this.admin_ward = admin_ward;
-            this.parish = parish;
-            this.ccg = ccg;
-            this.nuts = nuts;
-        }
-
         /**
          * <b>District.</b>The current district/unitary authority to which the postcode has been
          * assigned.

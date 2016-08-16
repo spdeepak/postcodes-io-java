@@ -57,17 +57,6 @@ public class ReverseGeocoding {
         return this;
     }
 
-    public ReverseGeocoding json(JSONObject json) {
-        ReverseGeocoding.json = json;
-        return this;
-    }
-
-    public ReverseGeocoding json(List<Reverse> reverses) {
-        ReverseGeocoding.reverses = reverses;
-        ReverseGeocoding.json = createGeocodings(ReverseGeocoding.reverses);
-        return this;
-    }
-
     /**
      * (not required) Search up to 20km radius, but subject to a maximum of 10 results. Since
      * lookups over a wide area can be very expensive, we've created this method to allow you choose
@@ -82,6 +71,11 @@ public class ReverseGeocoding {
         return this;
     }
 
+    /**
+     * @return {@link JSONObject}
+     * @throws IOException
+     * @throws UnirestException
+     */
     public JSONObject asjson() throws IOException, UnirestException {
         String url = "";
         url = url.concat("lon=").concat(String.valueOf(longitude));
@@ -92,9 +86,7 @@ public class ReverseGeocoding {
         if (getRadius() != 0) {
             url = url.concat("&radius=").concat(String.valueOf(radius));
         }
-        if (isWideSearch()) {
-            url = url.concat("&widesearch=").concat(String.valueOf(wideSearch));
-        }
+        url = url.concat("&widesearch=").concat(String.valueOf(wideSearch));
         try {
             if (json != null) {
                 return JsonFetcher.postURLToJson(new URL(LOOKUP_URL), json);
@@ -117,26 +109,24 @@ public class ReverseGeocoding {
     }
 
     private JSONObject createGeocodings(List<Reverse> reverses) {
-        JSONObject json = new JSONObject();
         JSONObject tempJson;
         JSONArray jsonArray = new JSONArray();
         for (Reverse reverse : reverses) {
             tempJson = new JSONObject();
-            tempJson.put("longitude", reverse.getLongitude());
-            tempJson.put("latitude", reverse.getLatitude());
+            tempJson.put("longitude", reverse.getLongitude().toString());
+            tempJson.put("latitude", reverse.getLatitude().toString());
             if (reverse.getLimit() != 0) {
-                tempJson.put("limit", reverse.getLimit());
+                tempJson.put("limit", String.valueOf(reverse.getLimit()));
             }
             if (reverse.getRadius() != 0) {
-                tempJson.put("radius", reverse.getRadius());
+                tempJson.put("radius", String.valueOf(reverse.getRadius()));
             }
             if (reverse.isWideSearch()) {
-                tempJson.put("wideSearch", reverse.isWideSearch());
+                tempJson.put("wideSearch", String.valueOf(reverse.isWideSearch()));
             }
             jsonArray.put(tempJson);
-            tempJson = null;
         }
-        return json.put("geolocations", jsonArray);
+        return new JSONObject().put("geolocations", jsonArray);
     }
 
     public class Reverse {
@@ -203,24 +193,12 @@ public class ReverseGeocoding {
         }
     }
 
-    private static Double getLongitude() {
-        return longitude;
-    }
-
-    private static Double getLatitude() {
-        return latitude;
-    }
-
     private static int getLimit() {
         return limit;
     }
 
     private static int getRadius() {
         return radius;
-    }
-
-    private static boolean isWideSearch() {
-        return wideSearch;
     }
 
 }

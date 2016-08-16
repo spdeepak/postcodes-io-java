@@ -1,12 +1,10 @@
 package com.postcode.io.initializers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +15,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.initializers.ReverseGeocoding.Reverse;
 import com.postcode.io.json.JsonFetcher;
@@ -83,13 +82,10 @@ public class PostcodeLookupTest {
 
     @Test
     public void testReverseGeocoding() throws Exception {
-        assertTrue(PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().has("result"));
-        assertTrue(PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().has("status"));
-        assertTrue(
-                PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).asjson().getInt("status") == 200);
         JSONAssert.assertEquals(
-                JsonFetcher.urlToJson(
-                        new URL("https://api.postcodes.io/postcodes?lon=0.629834723775309&lat=51.7923246977375&limit=100&radius=2000&widesearch=true")),
+                Unirest.get("https://api.postcodes.io/postcodes").queryString("lon", 0.629834723775309)
+                        .queryString("lat", 51.7923246977375).queryString("limit", 100).queryString("radius", 2000)
+                        .queryString("widesearch", true).asJson().getBody().getObject(),
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
                         .wideSearch(true).asjson(),
                 JSONCompareMode.STRICT);
