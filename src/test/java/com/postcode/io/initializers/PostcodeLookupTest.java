@@ -1,6 +1,7 @@
 package com.postcode.io.initializers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class PostcodeLookupTest {
 
     @Test
     public void testReverseGeocodings() throws MalformedURLException, UnirestException, IOException {
-        List<com.postcode.io.initializers.ReverseGeocoding.Reverse> reverseList = new ArrayList<>();
+        List<Reverse> reverseList = new ArrayList<>();
         ReverseGeocoding reverseGeocoding = new ReverseGeocoding();
         Reverse reverse = reverseGeocoding.new Reverse();
         reverse.setLongitude(0.629834723775309);
@@ -89,6 +90,16 @@ public class PostcodeLookupTest {
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
                         .wideSearch(true).asjson(),
                 JSONCompareMode.STRICT);
+    }
+
+    @Test
+    public void testRandomPostcode() throws JSONException, UnirestException, IOException {
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/random/postcodes").queryString("outcode", "bs347np").asJson()
+                        .getBody().getObject(),
+                PostcodeLookup.randomPostcode("bs347np").asjson(), JSONCompareMode.LENIENT);
+        assertTrue(PostcodeLookup.randomPostcode().asjson().has("result"));
+        assertEquals(200,PostcodeLookup.randomPostcode().asjson().getInt("status"));
     }
 
 }

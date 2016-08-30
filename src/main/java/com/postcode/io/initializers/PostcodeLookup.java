@@ -80,4 +80,12 @@ public class PostcodeLookup {
         return new ReverseGeocoding(reverses);
     }
 
+    public static ReverseGeocoding randomPostcode() {
+        return new ReverseGeocoding("");
+    }
+
+    public static ReverseGeocoding randomPostcode(String outcode) {
+        return new ReverseGeocoding(outcode);
+    }
+
 }
