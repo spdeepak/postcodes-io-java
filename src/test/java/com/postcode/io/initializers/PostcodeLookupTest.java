@@ -1,6 +1,7 @@
 package com.postcode.io.initializers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -99,7 +100,13 @@ public class PostcodeLookupTest {
                         .getBody().getObject(),
                 PostcodeLookup.randomPostcode("bs347np").asjson(), JSONCompareMode.LENIENT);
         assertTrue(PostcodeLookup.randomPostcode().asjson().has("result"));
-        assertEquals(200,PostcodeLookup.randomPostcode().asjson().getInt("status"));
+        assertEquals(200, PostcodeLookup.randomPostcode().asjson().getInt("status"));
+    }
+
+    @Test
+    public void testPostcodeValidator() throws JSONException, UnirestException {
+        assertTrue(PostcodeLookup.validate("ST42EU"));
+        assertFalse(PostcodeLookup.validate("ST4"));
     }
 
 }

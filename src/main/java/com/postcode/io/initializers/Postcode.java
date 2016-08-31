@@ -5,8 +5,11 @@ import java.net.URL;
 
 import org.codehaus.plexus.util.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.PostCodeDetails;
 import com.postcode.io.json.JsonFetcher;
 
@@ -97,4 +100,8 @@ public class Postcode {
         this.json = json;
     }
 
+    public static boolean validatePostcode(String postcode) throws JSONException, UnirestException {
+        return Unirest.get("https://api.postcodes.io/postcodes/".concat(postcode).concat("/validate")).asJson()
+                .getBody().getObject().getBoolean("result");
+    }
 }

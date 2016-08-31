@@ -1,8 +1,13 @@
 package com.postcode.io.initializers;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.json.JSONException;
 import org.junit.Test;
+
+import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class PostcodeTest {
 
@@ -19,6 +24,12 @@ public class PostcodeTest {
         } catch (IllegalArgumentException e) {
             assertEquals("postcode/postcodes are mandatory", e.getMessage());
         }
+    }
+
+    @Test
+    public void testPostcodeValidator() throws JSONException, UnirestException {
+        assertTrue(Postcode.validatePostcode("ST42EU"));
+        assertFalse(Postcode.validatePostcode("ST4"));
     }
 
 }

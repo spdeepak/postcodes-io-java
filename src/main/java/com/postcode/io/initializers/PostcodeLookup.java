@@ -3,6 +3,9 @@ package com.postcode.io.initializers;
 import java.net.URL;
 import java.util.List;
 
+import org.json.JSONException;
+
+import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.initializers.ReverseGeocoding.Reverse;
 
 /**
@@ -86,6 +89,10 @@ public class PostcodeLookup {
 
     public static ReverseGeocoding randomPostcode(String outcode) {
         return new ReverseGeocoding(outcode);
+    }
+
+    public static boolean validate(String postcode) throws JSONException, UnirestException {
+        return Postcode.validatePostcode(postcode);
     }
 
 }
