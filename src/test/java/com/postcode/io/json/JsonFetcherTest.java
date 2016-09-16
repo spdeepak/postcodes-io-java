@@ -95,8 +95,8 @@ public class JsonFetcherTest {
                 JSONObject result = jsonArray.getJSONObject(i).getJSONObject("result");
                 assertEquals("ST4 2EU", (result.getString("postcode")));
                 assertEquals(1, (result.getInt("quality")));
-                assertEquals(387884, (result.getInt("eastings")));
-                assertEquals(346021, (result.getInt("northings")));
+                assertEquals(387894, (result.getInt("eastings")));
+                assertEquals(346047, (result.getInt("northings")));
                 assertEquals("England", (result.getString("country")));
                 assertEquals("West Midlands", (result.getString("nhs_ha")));
                 assertEquals(-2.18203015918483, result.getDouble("longitude"), 1);

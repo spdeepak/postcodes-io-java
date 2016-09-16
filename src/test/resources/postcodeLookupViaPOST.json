@@ -2,6 +2,41 @@
     "status": 200,
     "result": [
         {
+            "query": "OX49 5NU",
+            "result": {
+                "postcode": "OX49 5NU",
+                "quality": 1,
+                "eastings": 464447,
+                "northings": 195647,
+                "country": "England",
+                "nhs_ha": "South Central",
+                "longitude": -1.06977254466896,
+                "latitude": 51.6559271444373,
+                "parliamentary_constituency": "Henley",
+                "european_electoral_region": "South East",
+                "primary_care_trust": "Oxfordshire",
+                "region": "South East",
+                "lsoa": "South Oxfordshire 011B",
+                "msoa": "South Oxfordshire 011",
+                "incode": "5NU",
+                "outcode": "OX49",
+                "admin_district": "South Oxfordshire",
+                "parish": "Brightwell Baldwin",
+                "admin_county": "Oxfordshire",
+                "admin_ward": "Chalgrove",
+                "ccg": "NHS Oxfordshire",
+                "nuts": "Oxfordshire",
+                "codes": {
+                    "admin_district": "E07000179",
+                    "admin_county": "E10000025",
+                    "admin_ward": "E05009735",
+                    "parish": "E04008109",
+                    "ccg": "E38000136",
+                    "nuts": "UKJ14"
+                }
+            }
+        },
+        {
             "query": "M32 0JG",
             "result": {
                 "postcode": "M32 0JG",
@@ -33,41 +68,6 @@
                     "parish": "E43000163",
                     "ccg": "E38000187",
                     "nuts": "UKD34"
-                }
-            }
-        },
-        {
-            "query": "OX49 5NU",
-            "result": {
-                "postcode": "OX49 5NU",
-                "quality": 1,
-                "eastings": 464440,
-                "northings": 195671,
-                "country": "England",
-                "nhs_ha": "South Central",
-                "longitude": -1.06986930435083,
-                "latitude": 51.656143706615,
-                "parliamentary_constituency": "Henley",
-                "european_electoral_region": "South East",
-                "primary_care_trust": "Oxfordshire",
-                "region": "South East",
-                "lsoa": "South Oxfordshire 011B",
-                "msoa": "South Oxfordshire 011",
-                "incode": "5NU",
-                "outcode": "OX49",
-                "admin_district": "South Oxfordshire",
-                "parish": "Brightwell Baldwin",
-                "admin_county": "Oxfordshire",
-                "admin_ward": "Chalgrove",
-                "ccg": "NHS Oxfordshire",
-                "nuts": "Oxfordshire",
-                "codes": {
-                    "admin_district": "E07000179",
-                    "admin_county": "E10000025",
-                    "admin_ward": "E05009735",
-                    "parish": "E04008109",
-                    "ccg": "E38000136",
-                    "nuts": "UKJ14"
                 }
             }
         },
