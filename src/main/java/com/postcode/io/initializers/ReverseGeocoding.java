@@ -87,7 +87,7 @@ public class ReverseGeocoding {
      * @throws IOException
      * @throws UnirestException
      */
-    public JSONObject asjson() throws IOException, UnirestException {
+    public JSONObject asJson() throws IOException, UnirestException {
         if (random) {
             return Unirest.get(RANDOM_LOOKUP_URL).queryString("outcode", outcode).asJson().getBody().getObject();
         }

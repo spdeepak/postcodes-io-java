@@ -79,7 +79,7 @@ public class PostcodeLookupTest {
                 JsonFetcher.urlToJson(
                         new File(System.getProperty("user.dir").concat("/src/test/resources/bulkReverseGeocoding.json"))
                                 .toURI().toURL()),
-                PostcodeLookup.reverseGeocodings(reverseList).asjson(), JSONCompareMode.LENIENT);
+                PostcodeLookup.reverseGeocodings(reverseList).asJson(), JSONCompareMode.LENIENT);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PostcodeLookupTest {
                         .queryString("lat", 51.7923246977375).queryString("limit", 100).queryString("radius", 2000)
                         .queryString("widesearch", true).asJson().getBody().getObject(),
                 PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
-                        .wideSearch(true).asjson(),
+                        .wideSearch(true).asJson(),
                 JSONCompareMode.STRICT);
     }
 
@@ -98,15 +98,15 @@ public class PostcodeLookupTest {
         JSONAssert.assertEquals(
                 Unirest.get("https://api.postcodes.io/random/postcodes").queryString("outcode", "bs347np").asJson()
                         .getBody().getObject(),
-                PostcodeLookup.randomPostcode("bs347np").asjson(), JSONCompareMode.LENIENT);
-        assertTrue(PostcodeLookup.randomPostcode().asjson().has("result"));
-        assertEquals(200, PostcodeLookup.randomPostcode().asjson().getInt("status"));
+                PostcodeLookup.randomPostcode("bs347np").asJson(), JSONCompareMode.LENIENT);
+        assertTrue(PostcodeLookup.randomPostcode().asJson().has("result"));
+        assertEquals(200, PostcodeLookup.randomPostcode().asJson().getInt("status"));
     }
 
     @Test
     public void testPostcodeValidator() throws JSONException, UnirestException {
-        assertTrue(PostcodeLookup.validate("ST42EU"));
-        assertFalse(PostcodeLookup.validate("ST4"));
+        assertTrue(PostcodeLookup.isValid("ST42EU"));
+        assertFalse(PostcodeLookup.isValid("ST4"));
     }
 
     @Test
