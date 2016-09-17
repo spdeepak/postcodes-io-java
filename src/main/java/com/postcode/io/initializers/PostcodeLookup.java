@@ -95,4 +95,8 @@ public class PostcodeLookup {
         return Postcode.validatePostcode(postcode);
     }
 
+    public static NearestPostcode nearestPostcode(String postcode) {
+        return new NearestPostcode(postcode);
+    }
+
 }

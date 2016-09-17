@@ -109,4 +109,14 @@ public class PostcodeLookupTest {
         assertFalse(PostcodeLookup.validate("ST4"));
     }
 
+    @Test
+    public void testNearestPostcode() throws Exception {
+        assertTrue(PostcodeLookup.nearestPostcode("ST4 2EU").asJson().get("status").equals(200));
+        assertEquals(7, PostcodeLookup.nearestPostcode("ST4 2EU").asJson().getJSONArray("result").length());
+        assertTrue(PostcodeLookup.nearestPostcode("ST4").asJson().get("status").equals(404));
+        assertEquals(5, PostcodeLookup.nearestPostcode("ST42EU").limit(5).asJson().getJSONArray("result").length());
+        assertEquals(7, PostcodeLookup.nearestPostcode("ST42EU").limit(20).radius(100).asJson().getJSONArray("result")
+                .length());
+    }
+
 }
