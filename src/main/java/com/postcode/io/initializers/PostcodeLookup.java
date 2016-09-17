@@ -95,4 +95,8 @@ public class PostcodeLookup {
         return new NearestPostcode(postcode);
     }
 
+    public static LimitPostcode autocomplete(String postcode) {
+        return new LimitPostcode(postcode);
+    }
+
 }

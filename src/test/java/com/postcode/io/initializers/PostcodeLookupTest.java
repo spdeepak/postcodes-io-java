@@ -119,4 +119,12 @@ public class PostcodeLookupTest {
                 .length());
     }
 
+    @Test
+    public void testAutoComplete() throws Exception {
+        assertEquals(200, PostcodeLookup.autocomplete("ST4").asJson().get("status"));
+        assertEquals("ST4 1AA", PostcodeLookup.autocomplete("ST4").asJson().getJSONArray("result").get(0));
+        assertEquals(10, PostcodeLookup.autocomplete("ST4").asJson().getJSONArray("result").length());
+        assertEquals(20, PostcodeLookup.autocomplete("ST4").limit(20).asJson().getJSONArray("result").length());
+    }
+
 }
