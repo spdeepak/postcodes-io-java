@@ -20,17 +20,11 @@ public class ReverseGeocoding {
 
     private static final String LOOKUP_URL = "http://api.postcodes.io/postcodes?";
 
-    private static final String RANDOM_LOOKUP_URL = "https://api.postcodes.io/random/postcodes";
-
     private static Double longitude;
 
     private static Double latitude;
 
     private static int limit;
-
-    private static String outcode;
-
-    private static boolean random;
 
     private static int radius;
 
@@ -41,11 +35,6 @@ public class ReverseGeocoding {
     private static List<Reverse> reverses = new ArrayList<>();
 
     public ReverseGeocoding() {
-    }
-
-    public ReverseGeocoding(String outcode) {
-        ReverseGeocoding.outcode = outcode;
-        ReverseGeocoding.random = true;
     }
 
     public ReverseGeocoding(Double longitude, Double latitude) {
@@ -88,9 +77,6 @@ public class ReverseGeocoding {
      * @throws UnirestException
      */
     public JSONObject asJson() throws IOException, UnirestException {
-        if (random) {
-            return Unirest.get(RANDOM_LOOKUP_URL).queryString("outcode", outcode).asJson().getBody().getObject();
-        }
         String url = "";
         url = url.concat("lon=").concat(String.valueOf(longitude));
         url = url.concat("&lat=").concat(String.valueOf(latitude));

@@ -100,7 +100,7 @@ public class Postcode {
         this.json = json;
     }
 
-    public static boolean validatePostcode(String postcode) throws JSONException, UnirestException {
+    public static boolean isValid(String postcode) throws JSONException, UnirestException {
         return Unirest.get("https://api.postcodes.io/postcodes/".concat(postcode).concat("/validate")).asJson()
                 .getBody().getObject().getBoolean("result");
     }

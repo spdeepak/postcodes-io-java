@@ -28,8 +28,8 @@ public class PostcodeTest {
 
     @Test
     public void testPostcodeValidator() throws JSONException, UnirestException {
-        assertTrue(Postcode.validatePostcode("ST42EU"));
-        assertFalse(Postcode.validatePostcode("ST4"));
+        assertTrue(Postcode.isValid("ST42EU"));
+        assertFalse(Postcode.isValid("ST4"));
     }
 
 }

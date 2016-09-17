@@ -98,7 +98,7 @@ public class PostcodeLookupTest {
         JSONAssert.assertEquals(
                 Unirest.get("https://api.postcodes.io/random/postcodes").queryString("outcode", "bs347np").asJson()
                         .getBody().getObject(),
-                PostcodeLookup.randomPostcode("bs347np").asJson(), JSONCompareMode.LENIENT);
+                PostcodeLookup.randomPostcode().outcode("bs347np").asJson(), JSONCompareMode.LENIENT);
         assertTrue(PostcodeLookup.randomPostcode().asJson().has("result"));
         assertEquals(200, PostcodeLookup.randomPostcode().asJson().getInt("status"));
     }

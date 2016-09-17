@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.initializers.ReverseGeocoding.Reverse;
 
@@ -84,17 +83,12 @@ public class PostcodeLookup {
         return new ReverseGeocoding(reverses);
     }
 
-    public static ReverseGeocoding randomPostcode() {
-        return new ReverseGeocoding("");
-    }
-
-    public static ReverseGeocoding randomPostcode(String outcode) {
-        return new ReverseGeocoding(outcode);
+    public static RandomPostcode randomPostcode() {
+        return new RandomPostcode();
     }
 
     public static boolean isValid(String postcode) throws JSONException, UnirestException {
-        return Unirest.get("https://api.postcodes.io/postcodes/".concat(postcode).concat("/validate")).asJson()
-                .getBody().getObject().getBoolean("result");
+        return Postcode.isValid(postcode);
     }
 
     public static NearestPostcode nearestPostcode(String postcode) {
