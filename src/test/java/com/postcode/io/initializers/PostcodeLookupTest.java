@@ -47,9 +47,8 @@ public class PostcodeLookupTest {
 
     @Test
     public void testPostCodeLookupAsJsonForSinglePostcode() throws JSONException, MalformedURLException, Exception {
-        JSONAssert.assertEquals(JsonFetcher
-                .urlToJson(new File(System.getProperty("user.dir").concat("/src/test/resources/postcodeLookup.json"))
-                        .toURI().toURL()),
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/postcodes/".concat("bs347np")).asJson().getBody().getObject(),
                 PostcodeLookup.postcode("bs347np").asJson(), JSONCompareMode.STRICT);
     }
 
