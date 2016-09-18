@@ -76,3 +76,14 @@ Limits number of postcodes matches to return based on <i>limit</i> based on <i>l
 Limits number of postcodes matches to return based on <i>radius</i>. Defaults to 5,000m. Needs to be less than 25,000m.
 
 	PostcodeLookup.nearestOutwardCode("ST4").radius(20000).asJson();
+
+####11. Get nearest outward codes for a given longitude & latitude
+	PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).asJson();
+
+Limits number of postcodes matches to return based on <i>limit</i> based on <i>limit</i>. Defaults to 10. Needs to be less than 100.
+
+	PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).limit(20).asJson();
+	
+Limits number of postcodes matches to return based on <i>radius</i>. Defaults to 5,000m. Needs to be less than 25,000m.
+
+	PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).radius(10000).asJson();
