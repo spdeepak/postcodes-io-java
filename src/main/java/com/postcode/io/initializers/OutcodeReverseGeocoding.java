@@ -7,7 +7,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class OutcodeReverseGeocoding {
 
-    private static final String OUTWARD_CODE_URL = "https://api.postcodes.io/outcodes/";
+    private static final String OUTCODE_URL = "https://api.postcodes.io/outcodes/";
 
     private static String outwardCode;
 
@@ -61,16 +61,16 @@ public class OutcodeReverseGeocoding {
     public JSONObject asJson() throws UnirestException {
         try {
             if (nearest) {
-                return Unirest.get(OUTWARD_CODE_URL.concat(outwardCode).concat("/nearest"))
+                return Unirest.get(OUTCODE_URL.concat(outwardCode).concat("/nearest"))
                         .queryString("limit", limit != 0 ? limit : 10)
                         .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject();
             }
             if (latlong) {
-                return Unirest.get(OUTWARD_CODE_URL).queryString("lon", longitude).queryString("lat", latitude)
+                return Unirest.get(OUTCODE_URL).queryString("lon", longitude).queryString("lat", latitude)
                         .queryString("limit", limit != 0 ? limit : 10)
                         .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject();
             }
-            return Unirest.get(OUTWARD_CODE_URL.concat(outwardCode)).asJson().getBody().getObject();
+            return Unirest.get(OUTCODE_URL.concat(outwardCode)).asJson().getBody().getObject();
         } finally {
             clear();
         }
