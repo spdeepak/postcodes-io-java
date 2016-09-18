@@ -144,6 +144,9 @@ public class PostcodeLookupTest {
         JSONAssert.assertEquals(
                 Unirest.get("https://api.postcodes.io/outcodes//nearest").asJson().getBody().getObject(),
                 PostcodeLookup.nearestOutwardCode("").asJson(), JSONCompareMode.STRICT);
+        assertEquals(5, PostcodeLookup.nearestOutwardCode("ST4").limit(5).asJson().getJSONArray("result").length());
+        assertEquals(10,
+                PostcodeLookup.nearestOutwardCode("ST4").radius(25000).asJson().getJSONArray("result").length());
     }
 
     @Test
