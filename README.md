@@ -7,8 +7,8 @@ UK Postcode Java API serving up Open Data http://postcodes.io
 
 <b>1. [Lookup a Post Code] (https://github.com/spdeepak/postcodes-io-java#1-lookup-a-postcode)</b><br/>
 <b>2. [Bulk lookup Post Codes](https://github.com/spdeepak/postcodes-io-java#2-bulk-lookup-postcodes)</b><br/>
-<b>3. [Get nearest postcodes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#3get-nearest-postcodes-for-a-given-longitude--latitude)</b><br/>
-<b>4. [Bulk Reverse Geocoding] (https://github.com/spdeepak/postcodes-io-java#4bulk-reverse-geocoding)</b><br/>
+<b>3. [Get nearest postcodes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#3-get-nearest-postcodes-for-a-given-longitude--latitude)</b><br/>
+<b>4. [Bulk Reverse Geocoding] (https://github.com/spdeepak/postcodes-io-java#4-bulk-reverse-geocoding)</b><br/>
 
 ###1. Lookup a postcode
 	PostcodeLookup.postcode("BS347NP").asJson();
