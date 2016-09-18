@@ -6,17 +6,17 @@
 UK Postcode Java API serving up Open Data from [Post Code](http://postcodes.io)
 
 <h2>To Get JSON data</h2>
-<b>1. [Lookup a Post Code] (https://github.com/spdeepak/postcodes-io-java#1-lookup-a-postcode)</b><br/>
-<b>2. [Bulk lookup Post Codes](https://github.com/spdeepak/postcodes-io-java#2-bulk-lookup-postcodes)</b><br/>
-<b>3. [Get nearest Post Codes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#3-get-nearest-postcodes-for-a-given-longitude--latitude)</b><br/>
-<b>4. [Bulk Reverse Geocoding] (https://github.com/spdeepak/postcodes-io-java#4-bulk-reverse-geocoding)</b><br/>
-<b>5. [Get a random Post Code] (https://github.com/spdeepak/postcodes-io-java#5-get-a-random-postcode)</b><br/>
-<b>6. [Validate a Post Code] (https://github.com/spdeepak/postcodes-io-java#6-validate-a-postcode)</b><br/>
-<b>7. [Nearest Post Codes for Post Code] (https://github.com/spdeepak/postcodes-io-java#7-nearest-postcodes-for-postcode)</b><br/>
-<b>8. [Autocomplete a postcode partial] (https://github.com/spdeepak/postcodes-io-java#8-autocomplete-a-postcode-partial)</b><br/>
-<b>9. [Lookup Outward Code] (https://github.com/spdeepak/postcodes-io-java#9-lookup-outward-code)</b><br/>
-<b>10. [Nearest outward code for outward code] (https://github.com/spdeepak/postcodes-io-java#10-nearest-outward-code-for-outward-code)</b><br/>
-<b>11. [Get nearest outward codes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#11-get-nearest-outward-codes-for-a-given-longitude--latitude)</b><br/>
+<b>1  . [Lookup a Post Code] (https://github.com/spdeepak/postcodes-io-java#1-lookup-a-postcode)</b><br/>
+<b>2  . [Bulk lookup Post Codes](https://github.com/spdeepak/postcodes-io-java#2-bulk-lookup-postcodes)</b><br/>
+<b>3  . [Get nearest Post Codes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#3-get-nearest-postcodes-for-a-given-longitude--latitude)</b><br/>
+<b>4  . [Bulk Reverse Geocoding] (https://github.com/spdeepak/postcodes-io-java#4-bulk-reverse-geocoding)</b><br/>
+<b>5  . [Get a random Post Code] (https://github.com/spdeepak/postcodes-io-java#5-get-a-random-postcode)</b><br/>
+<b>6  . [Validate a Post Code] (https://github.com/spdeepak/postcodes-io-java#6-validate-a-postcode)</b><br/>
+<b>7  . [Nearest Post Codes for Post Code] (https://github.com/spdeepak/postcodes-io-java#7-nearest-postcodes-for-postcode)</b><br/>
+<b>8  . [Autocomplete a postcode partial] (https://github.com/spdeepak/postcodes-io-java#8-autocomplete-a-postcode-partial)</b><br/>
+<b>9  . [Lookup Outward Code] (https://github.com/spdeepak/postcodes-io-java#9-lookup-outward-code)</b><br/>
+<b>10 . [Nearest outward code for outward code] (https://github.com/spdeepak/postcodes-io-java#10-nearest-outward-code-for-outward-code)</b><br/>
+<b>11 . [Get nearest outward codes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#11-get-nearest-outward-codes-for-a-given-longitude--latitude)</b><br/>
 
 ###1. Lookup a postcode
 	PostcodeLookup.postcode("BS347NP").asJson();
