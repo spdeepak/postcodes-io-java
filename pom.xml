@@ -4,15 +4,22 @@
 
 	<groupId>com.postcode</groupId>
 	<artifactId>postcodes-io-java</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>postcodes-io-java</name>
-	<url>http://maven.apache.org</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<contributors>
+		<contributor>
+			<name>Deepak Sunanda Prabhakar</name>
+			<email>spdeepak@outlook.com</email>
+			<url>https://uk.linkedin.com/in/spdeepak</url>
+		</contributor>
+	</contributors>
 
 	<build>
 		<finalName>postcodes-io-java</finalName>
