@@ -11,7 +11,7 @@ import com.mashape.unirest.http.exceptions.UnirestException;
  */
 public class LimitPostcode {
 
-    private static final String AUTOCOMPLETE_URL = "https://api.postcodes.io/postcodes/";
+    private static final String POSTCODE_LIMIT_URL = "https://api.postcodes.io/postcodes/";
 
     private static String postcode;
 
@@ -33,7 +33,7 @@ public class LimitPostcode {
     }
 
     public JSONObject asJson() throws UnirestException {
-        return Unirest.get(AUTOCOMPLETE_URL.concat(postcode).concat("/autocomplete"))
+        return Unirest.get(POSTCODE_LIMIT_URL.concat(postcode).concat("/autocomplete"))
                 .queryString("limit", limit != 0 ? limit : 10).asJson().getBody().getObject();
     }
 }

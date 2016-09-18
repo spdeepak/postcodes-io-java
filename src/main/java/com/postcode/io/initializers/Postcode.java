@@ -54,7 +54,7 @@ public class Postcode {
     public JSONObject asJson() throws Exception {
         try {
             if (!StringUtils.isEmpty(postcode)) {
-                return JsonFetcher.urlToJson(new URL(LOOKUP_URL.toString().concat(postcode)));
+                return Unirest.get(LOOKUP_URL.toString().concat(postcode)).asJson().getBody().getObject();
             } else if (json != null) {
                 return JsonFetcher.postURLToJson(new URL(LOOKUP_URL.toString()), json);
             } else {

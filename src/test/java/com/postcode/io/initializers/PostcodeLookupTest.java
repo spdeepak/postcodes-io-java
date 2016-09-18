@@ -127,4 +127,51 @@ public class PostcodeLookupTest {
         assertEquals(20, PostcodeLookup.autocomplete("ST4").limit(20).asJson().getJSONArray("result").length());
     }
 
+    @Test
+    public void testLookupOutwardCode() throws Exception {
+        assertEquals(200, PostcodeLookup.lookupOutwardCode("ST4").asJson().get("status"));
+        JSONAssert.assertEquals(Unirest.get("https://api.postcodes.io/outcodes/ST4").asJson().getBody().getObject(),
+                PostcodeLookup.lookupOutwardCode("ST4").asJson(), JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(Unirest.get("https://api.postcodes.io/outcodes/").asJson().getBody().getObject(),
+                PostcodeLookup.lookupOutwardCode("").asJson(), JSONCompareMode.STRICT);
+    }
+
+    @Test
+    public void testNearestOutwardCode() throws Exception {
+        assertEquals(200, PostcodeLookup.nearestOutwardCode("ST4").asJson().get("status"));
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/outcodes/ST4/nearest").asJson().getBody().getObject(),
+                PostcodeLookup.nearestOutwardCode("ST4").asJson(), JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/outcodes//nearest").asJson().getBody().getObject(),
+                PostcodeLookup.nearestOutwardCode("").asJson(), JSONCompareMode.STRICT);
+    }
+
+    @Test
+    public void testOutcodeReverseGeocoding() throws Exception {
+        assertEquals(200,
+                PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).asJson().get("status"));
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/outcodes/").queryString("lon", 0.637189329739338)
+                        .queryString("lat", 51.8051006359272).asJson().getBody().getObject(),
+                PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).asJson(),
+                JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/outcodes/").queryString("lon", 0.637189329739338)
+                        .queryString("lat", 51.8051006359272).queryString("limit", 20).queryString("radius", 10000)
+                        .asJson().getBody().getObject(),
+                PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).limit(20).radius(10000)
+                        .asJson(),
+                JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(
+                Unirest.get("https://api.postcodes.io/outcodes/").queryString("lon", 0.637189329739338)
+                        .queryString("lat", 51.8051006359272).queryString("limit", 20).asJson().getBody().getObject(),
+                PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).limit(20).asJson(),
+                JSONCompareMode.STRICT);
+        JSONAssert.assertEquals(Unirest.get("https://api.postcodes.io/outcodes/").queryString("lon", 0.637189329739338)
+                .queryString("lat", 51.8051006359272).queryString("radius", 10000).asJson().getBody().getObject(),
+                PostcodeLookup.outcodeReverseGeocoding(0.637189329739338, 51.8051006359272).radius(10000).asJson(),
+                JSONCompareMode.STRICT);
+    }
+
 }

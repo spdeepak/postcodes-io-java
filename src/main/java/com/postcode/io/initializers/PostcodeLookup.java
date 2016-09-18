@@ -99,4 +99,16 @@ public class PostcodeLookup {
         return new LimitPostcode(postcode);
     }
 
+    public static OutwardCode lookupOutwardCode(String outwardCode) {
+        return new OutwardCode(outwardCode);
+    }
+
+    public static OutcodeReverseGeocoding nearestOutwardCode(String outwardCode) {
+        return new OutcodeReverseGeocoding(outwardCode, true);
+    }
+
+    public static OutcodeReverseGeocoding outcodeReverseGeocoding(Double longitude, Double latitude) {
+        return new OutcodeReverseGeocoding(String.valueOf(longitude), String.valueOf(latitude));
+    }
+
 }
