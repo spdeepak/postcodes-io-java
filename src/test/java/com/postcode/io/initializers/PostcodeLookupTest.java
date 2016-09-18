@@ -87,7 +87,7 @@ public class PostcodeLookupTest {
                 Unirest.get("https://api.postcodes.io/postcodes").queryString("lon", 0.629834723775309)
                         .queryString("lat", 51.7923246977375).queryString("limit", 100).queryString("radius", 2000)
                         .queryString("widesearch", true).asJson().getBody().getObject(),
-                PostcodeLookup.reverseGeocoding(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
+                PostcodeLookup.nearestPostcode(0.629834723775309, 51.7923246977375).limit(100).radius(2000)
                         .wideSearch(true).asJson(),
                 JSONCompareMode.STRICT);
     }

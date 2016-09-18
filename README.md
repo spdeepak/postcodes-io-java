@@ -5,8 +5,8 @@
 # PostCodes-io-java
 UK Postcode Java API serving up Open Data http://postcodes.io
 
-<b>1. [Lookup a Post Code] (https://github.com/spdeepak/postcodes-io-java#lookup-a-postcode)</b><br/>
-<b>2. [Bulk lookup Post Codes](https://github.com/spdeepak/postcodes-io-java#bulk-lookup-postcodes)</b><br/>
+<b>1. [Lookup a Post Code] (https://github.com/spdeepak/postcodes-io-java#1-lookup-a-postcode)</b><br/>
+<b>2. [Bulk lookup Post Codes](https://github.com/spdeepak/postcodes-io-java#2-bulk-lookup-postcodes)</b><br/>
 <b>3.[Get nearest postcodes for a given longitude & latitude] (https://github.com/spdeepak/postcodes-io-java#3get-nearest-postcodes-for-a-given-longitude--latitude)</b><br/>
 
 ###1. Lookup a postcode

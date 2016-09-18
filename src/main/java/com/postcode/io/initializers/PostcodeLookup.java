@@ -69,7 +69,7 @@ public class PostcodeLookup {
      * @param latitude
      * @return
      */
-    public static ReverseGeocoding reverseGeocoding(Double longitude, Double latitude) {
+    public static ReverseGeocoding nearestPostcode(Double longitude, Double latitude) {
         return new ReverseGeocoding(longitude, latitude);
     }
 
