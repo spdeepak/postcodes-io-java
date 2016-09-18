@@ -83,30 +83,78 @@ public class PostcodeLookup {
         return new ReverseGeocoding(reverses);
     }
 
+    /**
+     * Convenience method to get random postcode and all available data for that postcode.
+     * 
+     * @return
+     */
     public static RandomPostcode randomPostcode() {
         return new RandomPostcode();
     }
 
+    /**
+     * 
+     * Convenience method to validate a postcode. Returns true or false (meaning valid or invalid
+     * respectively)
+     * 
+     * @param postcode
+     * @return
+     * @throws JSONException
+     * @throws UnirestException
+     */
     public static boolean isValid(String postcode) throws JSONException, UnirestException {
         return Postcode.isValid(postcode);
     }
 
+    /**
+     * Convenience method to get nearest outcodes for a given outcode.
+     * 
+     * @param postcode
+     * @return
+     */
     public static NearestPostcode nearestPostcode(String postcode) {
         return new NearestPostcode(postcode);
     }
 
+    /**
+     * Convenience method to return an list of matching postcodes.
+     * 
+     * @param postcode
+     * @return
+     */
     public static LimitPostcode autocomplete(String postcode) {
         return new LimitPostcode(postcode);
     }
 
+    /**
+     * Geolocation data for the centroid of the outward code specified. The outward code represents
+     * the first half of any postcode (separated by a space).
+     * 
+     * 
+     * @param outwardCode
+     * @return
+     */
     public static OutwardCode lookupOutwardCode(String outwardCode) {
         return new OutwardCode(outwardCode);
     }
 
+    /**
+     * Returns nearest outcodes for a given outcode.
+     * 
+     * @param outwardCode
+     * @return
+     */
     public static OutcodeReverseGeocoding nearestOutwardCode(String outwardCode) {
-        return new OutcodeReverseGeocoding(outwardCode, true);
+        return new OutcodeReverseGeocoding(outwardCode);
     }
 
+    /**
+     * Returns nearest outcodes for a given longitude and latitude.
+     * 
+     * @param longitude
+     * @param latitude
+     * @return
+     */
     public static OutcodeReverseGeocoding outcodeReverseGeocoding(Double longitude, Double latitude) {
         return new OutcodeReverseGeocoding(String.valueOf(longitude), String.valueOf(latitude));
     }

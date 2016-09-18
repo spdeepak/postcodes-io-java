@@ -11,8 +11,6 @@ public class OutcodeReverseGeocoding {
 
     private static String outwardCode;
 
-    private static boolean nearest = false;
-
     private static boolean latlong = false;
 
     private static String latitude;
@@ -29,9 +27,8 @@ public class OutcodeReverseGeocoding {
         OutcodeReverseGeocoding.latlong = true;
     }
 
-    protected OutcodeReverseGeocoding(String outwardCode, boolean nearest) {
+    protected OutcodeReverseGeocoding(String outwardCode) {
         OutcodeReverseGeocoding.outwardCode = outwardCode;
-        OutcodeReverseGeocoding.nearest = nearest;
     }
 
     /**
@@ -60,17 +57,13 @@ public class OutcodeReverseGeocoding {
 
     public JSONObject asJson() throws UnirestException {
         try {
-            if (nearest) {
-                return Unirest.get(OUTCODE_URL.concat(outwardCode).concat("/nearest"))
-                        .queryString("limit", limit != 0 ? limit : 10)
-                        .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject();
-            }
-            if (latlong) {
-                return Unirest.get(OUTCODE_URL).queryString("lon", longitude).queryString("lat", latitude)
-                        .queryString("limit", limit != 0 ? limit : 10)
-                        .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject();
-            }
-            return Unirest.get(OUTCODE_URL.concat(outwardCode)).asJson().getBody().getObject();
+            return latlong
+                    ? Unirest.get(OUTCODE_URL).queryString("lon", longitude).queryString("lat", latitude)
+                            .queryString("limit", limit != 0 ? limit : 10)
+                            .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject()
+                    : Unirest.get(OUTCODE_URL.concat(outwardCode).concat("/nearest"))
+                            .queryString("limit", limit != 0 ? limit : 10)
+                            .queryString("radius", radius != 0 ? radius : 5000).asJson().getBody().getObject();
         } finally {
             clear();
         }
@@ -79,7 +72,6 @@ public class OutcodeReverseGeocoding {
     private void clear() {
         latitude = null;
         longitude = null;
-        nearest = false;
         latlong = false;
         limit = 0;
         radius = 0;
