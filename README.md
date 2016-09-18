@@ -5,5 +5,7 @@
 # postcodes-io-java
 UK Postcode Java API serving up Open Data http://postcodes.io
 
-##Lookup a postcode
+##1. [Lookup a PostCode] (https://github.com/spdeepak/postcodes-io-java#lookup-a-postcode)
+
+###Lookup a postcode
 	PostcodeLookup.postcode("BD347NP").asJson();
