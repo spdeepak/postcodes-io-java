@@ -1,11 +1,10 @@
 package com.postcode.io.initializers;
 
-import java.io.IOException;
-
-import org.json.JSONObject;
-
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * @author Deepak
@@ -15,13 +14,13 @@ public class RandomPostcode {
 
     private static final String RANDOM_LOOKUP_URL = "https://api.postcodes.io/random/postcodes";
 
-    private static String outcode = "";
+    private String outcode = "";
 
     public RandomPostcode() {
     }
 
     public RandomPostcode outcode(String outcode) {
-        RandomPostcode.outcode = outcode;
+        this.outcode = outcode;
         return this;
     }
 

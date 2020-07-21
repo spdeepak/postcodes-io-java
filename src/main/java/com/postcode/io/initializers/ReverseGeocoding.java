@@ -3,6 +3,9 @@ package com.postcode.io.initializers;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.json.JsonFetcher;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,38 +17,33 @@ import java.util.List;
 /**
  * @author Deepak
  */
+@Data
 public class ReverseGeocoding {
 
     private static final String LOOKUP_URL = "http://api.postcodes.io/postcodes?";
 
-    private static Double longitude;
-
-    private static Double latitude;
-
-    private static int limit;
-
-    private static int radius;
-
-    private static boolean wideSearch;
-
-    private static JSONObject json;
-
-    private static List<Reverse> reverses = new ArrayList<>();
+    private int limit;
+    private int radius;
+    private JSONObject json;
+    private Double latitude;
+    private Double longitude;
+    private boolean wideSearch;
+    private List<Reverse> reverses = new ArrayList<>();
 
     public ReverseGeocoding() {
     }
 
     public ReverseGeocoding(Double longitude, Double latitude) {
-        ReverseGeocoding.longitude = longitude;
-        ReverseGeocoding.latitude = latitude;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public ReverseGeocoding(List<Reverse> reverses) {
-        ReverseGeocoding.reverses = reverses;
-        ReverseGeocoding.json = createGeocodings(ReverseGeocoding.reverses);
+        this.reverses = reverses;
+        this.json = createGeoCodings(this.reverses);
     }
 
-    private JSONObject createGeocodings(List<Reverse> reverses) {
+    private JSONObject createGeoCodings(List<Reverse> reverses) {
         JSONArray jsonArray = new JSONArray();
         reverses.forEach(reverse -> {
             JSONObject tempJson = new JSONObject();
@@ -68,12 +66,12 @@ public class ReverseGeocoding {
     }
 
     public ReverseGeocoding limit(int limit) {
-        ReverseGeocoding.limit = limit;
+        this.limit = limit;
         return this;
     }
 
     public ReverseGeocoding radius(int radius) {
-        ReverseGeocoding.radius = radius;
+        this.radius = radius;
         return this;
     }
 
@@ -85,7 +83,7 @@ public class ReverseGeocoding {
      * @return
      */
     public ReverseGeocoding wideSearch(boolean wideSearch) {
-        ReverseGeocoding.wideSearch = wideSearch;
+        this.wideSearch = wideSearch;
         return this;
     }
 
@@ -124,86 +122,26 @@ public class ReverseGeocoding {
         }
     }
 
-    private static int getLimit() {
-        return limit;
-    }
-
-    private static int getRadius() {
-        return radius;
-    }
-
     private void clear() {
-        ReverseGeocoding.longitude = null;
-        ReverseGeocoding.latitude = null;
-        ReverseGeocoding.limit = 0;
-        ReverseGeocoding.radius = 0;
-        ReverseGeocoding.wideSearch = false;
-        ReverseGeocoding.json = null;
-        ReverseGeocoding.reverses = null;
+        this.longitude = null;
+        this.latitude = null;
+        this.limit = 0;
+        this.radius = 0;
+        this.wideSearch = false;
+        this.json = null;
+        this.reverses = null;
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
     public class Reverse {
 
         private Double longitude;
-
         private Double latitude;
-
         private int limit;
-
         private int radius;
-
         private boolean wideSearch;
-
-        public Reverse() {
-        }
-
-        public Reverse(Double longitude, Double latitude, int limit, int radius, boolean wideSearch) {
-            this.longitude = longitude;
-            this.latitude = latitude;
-            this.limit = limit;
-            this.radius = radius;
-            this.wideSearch = wideSearch;
-        }
-
-        public Double getLongitude() {
-            return longitude;
-        }
-
-        public void setLongitude(Double longitude) {
-            this.longitude = longitude;
-        }
-
-        public Double getLatitude() {
-            return latitude;
-        }
-
-        public void setLatitude(Double latitude) {
-            this.latitude = latitude;
-        }
-
-        public int getLimit() {
-            return limit;
-        }
-
-        public void setLimit(int limit) {
-            this.limit = limit;
-        }
-
-        public int getRadius() {
-            return radius;
-        }
-
-        public void setRadius(int radius) {
-            this.radius = radius;
-        }
-
-        public boolean isWideSearch() {
-            return wideSearch;
-        }
-
-        public void setWideSearch(boolean wideSearch) {
-            this.wideSearch = wideSearch;
-        }
     }
 
 }
