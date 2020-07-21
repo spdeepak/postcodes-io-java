@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * {@link PostCodeDetails} Explaination<br/> <br/> For example: <b>BS34 7NP</b><br/>
+ * {@link PostCodeDetails} Explanation<br/> <br/> For example: <b>BS34 7NP</b><br/>
  * <b>BS</b>: Area<br/>
  * <b>34</b>: District<br/>
  * <b>7</b>: Sector<br/>
@@ -21,6 +21,31 @@ import java.net.URL;
 @Data
 @Slf4j
 public class PostCodeDetails {
+
+    private static final String F_CODES = "codes";
+    private static final String F_RESULT = "result";
+    private static final String F_POSTCODE = "postcode";
+    private static final String F_QUALITY = "quality";
+    private static final String F_EASTINGS = "eastings";
+    private static final String F_NORTHINGS = "northings";
+    private static final String F_COUNTRY = "country";
+    private static final String F_NHS_HA = "nhs_ha";
+    private static final String F_LONGITUDE = "longitude";
+    private static final String F_LATITUDE = "latitude";
+    private static final String F_PARLIAMENTARY_CONSTITUENCY = "parliamentary_constituency";
+    private static final String F_EUROPEAN_ELECTORAL_REGION = "european_electoral_region";
+    private static final String F_PRIMARY_CARE_TRUST = "primary_care_trust";
+    private static final String F_REGION = "region";
+    private static final String F_LSOA = "lsoa";
+    private static final String F_MSOA = "msoa";
+    private static final String F_INCODE = "incode";
+    private static final String F_OUTCODE = "outcode";
+    private static final String F_ADMIN_DISTRICT = "admin_district";
+    private static final String F_PARISH = "parish";
+    private static final String F_ADMIN_COUNTY = "admin_county";
+    private static final String F_ADMIN_WARD = "admin_ward";
+    private static final String F_CCG = "ccg";
+    private static final String F_NUTS = "nuts";
 
     private static PostCodeDetails pc;
     /**
@@ -150,7 +175,7 @@ public class PostCodeDetails {
         try {
             json = JsonFetcher.urlToJson(new URL(postcodeLookup.getUrl()));
             generateResult(json);
-            generateCodes(json.getJSONObject("result"));
+            generateCodes(json.getJSONObject(F_RESULT));
         } catch (MalformedURLException e) {
             log.info("Error with URL");
             throw new MalformedURLException("Error with URL");
@@ -159,74 +184,74 @@ public class PostCodeDetails {
     }
 
     private static void generateResult(JSONObject json) {
-        if (json.has("result")) {
-            json = json.getJSONObject("result");
+        if (json.has(F_RESULT)) {
+            json = json.getJSONObject(F_RESULT);
             pc = new PostCodeDetails();
-            if (isJSONPresentAndNotNull(json, "postcode")) {
-                pc.postcode = json.getString("postcode");
+            if (isJSONPresentAndNotNull(json, F_POSTCODE)) {
+                pc.postcode = json.getString(F_POSTCODE);
             }
-            if (isJSONPresentAndNotNull(json, "quality")) {
-                pc.quality = json.getInt("quality");
+            if (isJSONPresentAndNotNull(json, F_QUALITY)) {
+                pc.quality = json.getInt(F_QUALITY);
             }
-            if (isJSONPresentAndNotNull(json, "eastings")) {
-                pc.eastings = json.getInt("eastings");
+            if (isJSONPresentAndNotNull(json, F_EASTINGS)) {
+                pc.eastings = json.getInt(F_EASTINGS);
             }
-            if (isJSONPresentAndNotNull(json, "northings")) {
-                pc.northings = json.getInt("northings");
+            if (isJSONPresentAndNotNull(json, F_NORTHINGS)) {
+                pc.northings = json.getInt(F_NORTHINGS);
             }
-            if (isJSONPresentAndNotNull(json, "country")) {
-                pc.country = json.getString("country");
+            if (isJSONPresentAndNotNull(json, F_COUNTRY)) {
+                pc.country = json.getString(F_COUNTRY);
             }
-            if (isJSONPresentAndNotNull(json, "nhs_ha")) {
-                pc.nhs_ha = json.getString("nhs_ha");
+            if (isJSONPresentAndNotNull(json, F_NHS_HA)) {
+                pc.nhs_ha = json.getString(F_NHS_HA);
             }
-            if (isJSONPresentAndNotNull(json, "longitude")) {
-                pc.longitude = json.getDouble("longitude");
+            if (isJSONPresentAndNotNull(json, F_LONGITUDE)) {
+                pc.longitude = json.getDouble(F_LONGITUDE);
             }
-            if (isJSONPresentAndNotNull(json, "latitude")) {
-                pc.latitude = json.getDouble("latitude");
+            if (isJSONPresentAndNotNull(json, F_LATITUDE)) {
+                pc.latitude = json.getDouble(F_LATITUDE);
             }
-            if (isJSONPresentAndNotNull(json, "parliamentary_constituency")) {
-                pc.parliamentary_constituency = json.getString("parliamentary_constituency");
+            if (isJSONPresentAndNotNull(json, F_PARLIAMENTARY_CONSTITUENCY)) {
+                pc.parliamentary_constituency = json.getString(F_PARLIAMENTARY_CONSTITUENCY);
             }
-            if (isJSONPresentAndNotNull(json, "european_electoral_region")) {
-                pc.european_electoral_region = json.getString("european_electoral_region");
+            if (isJSONPresentAndNotNull(json, F_EUROPEAN_ELECTORAL_REGION)) {
+                pc.european_electoral_region = json.getString(F_EUROPEAN_ELECTORAL_REGION);
             }
-            if (isJSONPresentAndNotNull(json, "primary_care_trust")) {
-                pc.primary_care_trust = json.getString("primary_care_trust");
+            if (isJSONPresentAndNotNull(json, F_PRIMARY_CARE_TRUST)) {
+                pc.primary_care_trust = json.getString(F_PRIMARY_CARE_TRUST);
             }
-            if (isJSONPresentAndNotNull(json, "region")) {
-                pc.region = json.getString("region");
+            if (isJSONPresentAndNotNull(json, F_REGION)) {
+                pc.region = json.getString(F_REGION);
             }
-            if (isJSONPresentAndNotNull(json, "lsoa")) {
-                pc.lsoa = json.getString("lsoa");
+            if (isJSONPresentAndNotNull(json, F_LSOA)) {
+                pc.lsoa = json.getString(F_LSOA);
             }
-            if (isJSONPresentAndNotNull(json, "msoa")) {
-                pc.msoa = json.getString("msoa");
+            if (isJSONPresentAndNotNull(json, F_MSOA)) {
+                pc.msoa = json.getString(F_MSOA);
             }
-            if (isJSONPresentAndNotNull(json, "incode")) {
-                pc.incode = json.getString("incode");
+            if (isJSONPresentAndNotNull(json, F_INCODE)) {
+                pc.incode = json.getString(F_INCODE);
             }
-            if (isJSONPresentAndNotNull(json, "outcode")) {
-                pc.outcode = json.getString("outcode");
+            if (isJSONPresentAndNotNull(json, F_OUTCODE)) {
+                pc.outcode = json.getString(F_OUTCODE);
             }
-            if (isJSONPresentAndNotNull(json, "admin_district")) {
-                pc.admin_district = json.getString("admin_district");
+            if (isJSONPresentAndNotNull(json, F_ADMIN_DISTRICT)) {
+                pc.admin_district = json.getString(F_ADMIN_DISTRICT);
             }
-            if (isJSONPresentAndNotNull(json, "parish")) {
-                pc.parish = json.getString("parish");
+            if (isJSONPresentAndNotNull(json, F_PARISH)) {
+                pc.parish = json.getString(F_PARISH);
             }
-            if (isJSONPresentAndNotNull(json, "admin_county")) {
-                pc.admin_county = json.getBoolean("admin_county");
+            if (isJSONPresentAndNotNull(json, F_ADMIN_COUNTY)) {
+                pc.admin_county = json.getBoolean(F_ADMIN_COUNTY);
             }
-            if (isJSONPresentAndNotNull(json, "admin_ward")) {
-                pc.admin_ward = json.getString("admin_ward");
+            if (isJSONPresentAndNotNull(json, F_ADMIN_WARD)) {
+                pc.admin_ward = json.getString(F_ADMIN_WARD);
             }
-            if (isJSONPresentAndNotNull(json, "ccg")) {
-                pc.ccg = json.getString("ccg");
+            if (isJSONPresentAndNotNull(json, F_CCG)) {
+                pc.ccg = json.getString(F_CCG);
             }
-            if (isJSONPresentAndNotNull(json, "nuts")) {
-                pc.nuts = json.getString("nuts");
+            if (isJSONPresentAndNotNull(json, F_NUTS)) {
+                pc.nuts = json.getString(F_NUTS);
             }
         } else {
             throw new IllegalArgumentException("Postcode not found");
@@ -234,33 +259,33 @@ public class PostCodeDetails {
     }
 
     private static void generateCodes(JSONObject json) {
-        if (json.has("codes") && !json.get("codes")
+        if (json.has(F_CODES) && !json.get(F_CODES)
                 .equals(JSONObject.NULL)) {
-            JSONObject jcodes = json.getJSONObject("codes");
+            JSONObject jcodes = json.getJSONObject(F_CODES);
             Codes cod = pc.new Codes();
-            if (jcodes.has("admin_district") && !jcodes.get("admin_district")
+            if (jcodes.has(F_ADMIN_DISTRICT) && !jcodes.get(F_ADMIN_DISTRICT)
                     .equals(JSONObject.NULL)) {
-                cod.admin_district = jcodes.getString("admin_district");
+                cod.admin_district = jcodes.getString(F_ADMIN_DISTRICT);
             }
-            if (jcodes.has("admin_county") && !jcodes.get("admin_county")
+            if (jcodes.has(F_ADMIN_COUNTY) && !jcodes.get(F_ADMIN_COUNTY)
                     .equals(JSONObject.NULL)) {
-                cod.admin_county = jcodes.getString("admin_county");
+                cod.admin_county = jcodes.getString(F_ADMIN_COUNTY);
             }
-            if (jcodes.has("admin_ward") && !jcodes.get("admin_ward")
+            if (jcodes.has(F_ADMIN_WARD) && !jcodes.get(F_ADMIN_WARD)
                     .equals(JSONObject.NULL)) {
-                cod.admin_ward = jcodes.getString("admin_ward");
+                cod.admin_ward = jcodes.getString(F_ADMIN_WARD);
             }
-            if (jcodes.has("parish") && !jcodes.get("parish")
+            if (jcodes.has(F_PARISH) && !jcodes.get(F_PARISH)
                     .equals(JSONObject.NULL)) {
-                cod.parish = jcodes.getString("parish");
+                cod.parish = jcodes.getString(F_PARISH);
             }
-            if (jcodes.has("ccg") && !jcodes.get("ccg")
+            if (jcodes.has(F_CCG) && !jcodes.get(F_CCG)
                     .equals(JSONObject.NULL)) {
-                cod.ccg = jcodes.getString("ccg");
+                cod.ccg = jcodes.getString(F_CCG);
             }
-            if (jcodes.has("nuts") && !jcodes.get("nuts")
+            if (jcodes.has(F_NUTS) && !jcodes.get(F_NUTS)
                     .equals(JSONObject.NULL)) {
-                cod.nuts = jcodes.getString("nuts");
+                cod.nuts = jcodes.getString(F_NUTS);
             }
             pc.codes = cod;
         }

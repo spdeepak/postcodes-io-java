@@ -4,11 +4,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-
 /**
  * @author Deepak
- *
  */
 public class RandomPostcode {
 
@@ -24,7 +21,11 @@ public class RandomPostcode {
         return this;
     }
 
-    public JSONObject asJson() throws IOException, UnirestException {
-        return Unirest.get(RANDOM_LOOKUP_URL).queryString("outcode", outcode).asJson().getBody().getObject();
+    public JSONObject asJson() throws UnirestException {
+        return Unirest.get(RANDOM_LOOKUP_URL)
+                .queryString("outcode", outcode)
+                .asJson()
+                .getBody()
+                .getObject();
     }
 }

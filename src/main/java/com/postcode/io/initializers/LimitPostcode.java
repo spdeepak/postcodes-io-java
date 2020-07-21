@@ -13,12 +13,11 @@ public class LimitPostcode {
 
     private static final String POSTCODE_LIMIT_URL = "https://api.postcodes.io/postcodes/";
 
-    private static String postcode;
-
-    private static int limit;
+    private int limit;
+    private String postcode;
 
     public LimitPostcode(String postcode) {
-        LimitPostcode.postcode = postcode;
+        this.postcode = postcode;
     }
 
     /**
@@ -28,7 +27,7 @@ public class LimitPostcode {
      * @return
      */
     public LimitPostcode limit(int limit) {
-        LimitPostcode.limit = limit;
+        this.limit = limit;
         return this;
     }
 
