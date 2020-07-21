@@ -1,18 +1,17 @@
 package com.postcode.io.initializers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.json.JSONException;
-import org.junit.Test;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
 
-public class PostcodeTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+class PostcodeTest {
 
     @Test
-    public void testBuild() throws Exception {
+    void testBuild() throws Exception {
         Postcode pc = new Postcode("");
         try {
             pc.build();
@@ -27,7 +26,7 @@ public class PostcodeTest {
     }
 
     @Test
-    public void testPostcodeValidator() throws JSONException, UnirestException {
+    void testPostcodeValidator() throws JSONException, UnirestException {
         assertTrue(Postcode.isValid("ST42EU"));
         assertFalse(Postcode.isValid("ST4"));
     }

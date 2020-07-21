@@ -1,21 +1,19 @@
 package com.postcode.io.initializers;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.postcode.io.PostCodeDetails;
+import com.postcode.io.json.JsonFetcher;
 import org.codehaus.plexus.util.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.postcode.io.PostCodeDetails;
-import com.postcode.io.json.JsonFetcher;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @author Deepak
- *
  */
 public class Postcode {
 
@@ -45,18 +43,30 @@ public class Postcode {
         this.json = json.put("postcodes", jsonArray);
     }
 
+    public static boolean isValid(String postcode) throws JSONException, UnirestException {
+        return Unirest.get("https://api.postcodes.io/postcodes/".concat(postcode)
+                .concat("/validate"))
+                .asJson()
+                .getBody()
+                .getObject()
+                .getBoolean("result");
+    }
+
     /**
      * Get JSON for the given {@link #postcode} / {@link #postcodes}
-     * 
+     *
      * @return
      * @throws Exception
      */
     public JSONObject asJson() throws Exception {
         try {
             if (!StringUtils.isEmpty(postcode)) {
-                return Unirest.get(LOOKUP_URL.toString().concat(postcode)).asJson().getBody().getObject();
+                return Unirest.get(LOOKUP_URL.concat(postcode))
+                        .asJson()
+                        .getBody()
+                        .getObject();
             } else if (json != null) {
-                return JsonFetcher.postURLToJson(new URL(LOOKUP_URL.toString()), json);
+                return JsonFetcher.postURLToJson(new URL(LOOKUP_URL), json);
             } else {
                 throw new IllegalArgumentException("postcode/postcodes are mandatory");
             }
@@ -71,21 +81,8 @@ public class Postcode {
         setPostcodes(null);
     }
 
-    /**
-     * Use this to create {@link PostCodeDetails}<br/>
-     * Pass this to {@link PostCodeDetails#generate}
-     * 
-     * @return
-     * @throws MalformedURLException
-     */
-    public PostcodeLookup build() throws MalformedURLException {
-        if (postcode != null && !postcode.trim().isEmpty()) {
-            return new PostcodeLookup(new URL(LOOKUP_URL.toString().concat(postcode)), postcode, postcodes);
-        } else if (postcode == null && postcodes != null) {
-            return new PostcodeLookup(new URL(LOOKUP_URL.toString()), postcode, postcodes);
-        } else {
-            throw new IllegalArgumentException("postcode/postcodes are mandatory");
-        }
+    private void setJson(JSONObject json) {
+        this.json = json;
     }
 
     private void setPostcode(String postcode) {
@@ -96,12 +93,20 @@ public class Postcode {
         this.postcodes = postcodes;
     }
 
-    private void setJson(JSONObject json) {
-        this.json = json;
-    }
-
-    public static boolean isValid(String postcode) throws JSONException, UnirestException {
-        return Unirest.get("https://api.postcodes.io/postcodes/".concat(postcode).concat("/validate")).asJson()
-                .getBody().getObject().getBoolean("result");
+    /**
+     * Use this to create {@link PostCodeDetails}<br/> Pass this to {@link PostCodeDetails#generate}
+     *
+     * @return
+     * @throws MalformedURLException
+     */
+    public PostcodeLookup build() throws MalformedURLException {
+        if (postcode != null && !postcode.trim()
+                .isEmpty()) {
+            return new PostcodeLookup(new URL(LOOKUP_URL.concat(postcode)).toString(), postcode, postcodes);
+        } else if (postcode == null && postcodes != null) {
+            return new PostcodeLookup(new URL(LOOKUP_URL).toString(), postcode, postcodes);
+        } else {
+            throw new IllegalArgumentException("postcode/postcodes are mandatory");
+        }
     }
 }

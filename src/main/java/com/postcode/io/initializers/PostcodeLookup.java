@@ -1,49 +1,29 @@
 package com.postcode.io.initializers;
 
-import java.net.URL;
-import java.util.List;
-
-import org.json.JSONException;
-
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.postcode.io.initializers.ReverseGeocoding.Reverse;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.json.JSONException;
+
+import java.util.List;
 
 /**
  * Lookup a postcode
- * 
- * @author Deepak
  *
+ * @author Deepak
  */
+@Data
+@AllArgsConstructor
 public class PostcodeLookup {
 
+    private String url;
     private String postcode;
-
     private String[] postcodes;
 
-    private String url;
-
-    PostcodeLookup(URL url, String postcode, String[] postcodes) {
-        this.url = url.toString();
-        this.postcode = postcode;
-        this.postcodes = postcodes;
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public String[] getPostcodes() {
-        return postcodes;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
     /**
-     * Lookup a postcode. Returns all available data if found. Returns 404 if postcode does not
-     * exist.
-     * 
+     * Lookup a postcode. Returns all available data if found. Returns 404 if postcode does not exist.
+     *
      * @param postCode
      * @return
      */
@@ -53,9 +33,8 @@ public class PostcodeLookup {
 
     /**
      * Returns a list of matching postcodes and respective available data.
-     * 
-     * @param postcodes
-     *            Postcodes to Lookup (Max Limit is 100. Default is 10)
+     *
+     * @param postcodes Postcodes to Lookup (Max Limit is 100. Default is 10)
      * @return
      */
     public static Postcode postcodes(String[] postcodes) {
@@ -64,7 +43,7 @@ public class PostcodeLookup {
 
     /**
      * Returns nearest postcodes for a given longitude and latitude.
-     * 
+     *
      * @param longitude
      * @param latitude
      * @return
@@ -75,7 +54,7 @@ public class PostcodeLookup {
 
     /**
      * Bulk translates geolocations into Postcodes. Accepts up to 100 geolocations.
-     * 
+     *
      * @param reverses
      * @return
      */
@@ -85,7 +64,7 @@ public class PostcodeLookup {
 
     /**
      * Convenience method to get random postcode and all available data for that postcode.
-     * 
+     *
      * @return
      */
     public static RandomPostcode randomPostcode() {
@@ -93,10 +72,8 @@ public class PostcodeLookup {
     }
 
     /**
-     * 
-     * Convenience method to validate a postcode. Returns true or false (meaning valid or invalid
-     * respectively)
-     * 
+     * Convenience method to validate a postcode. Returns true or false (meaning valid or invalid respectively)
+     *
      * @param postcode
      * @return
      * @throws JSONException
@@ -108,7 +85,7 @@ public class PostcodeLookup {
 
     /**
      * Convenience method to get nearest outcodes for a given outcode.
-     * 
+     *
      * @param postcode
      * @return
      */
@@ -118,7 +95,7 @@ public class PostcodeLookup {
 
     /**
      * Convenience method to return an list of matching postcodes.
-     * 
+     *
      * @param postcode
      * @return
      */
@@ -127,10 +104,8 @@ public class PostcodeLookup {
     }
 
     /**
-     * Geolocation data for the centroid of the outward code specified. The outward code represents
-     * the first half of any postcode (separated by a space).
-     * 
-     * 
+     * Geolocation data for the centroid of the outward code specified. The outward code represents the first half of any postcode (separated by a space).
+     *
      * @param outwardCode
      * @return
      */
@@ -140,7 +115,7 @@ public class PostcodeLookup {
 
     /**
      * Returns nearest outcodes for a given outcode.
-     * 
+     *
      * @param outwardCode
      * @return
      */
@@ -150,7 +125,7 @@ public class PostcodeLookup {
 
     /**
      * Returns nearest outcodes for a given longitude and latitude.
-     * 
+     *
      * @param longitude
      * @param latitude
      * @return
