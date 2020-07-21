@@ -1,0 +1,27 @@
+plugins {
+    id 'java'
+    id 'maven'
+}
+
+group = 'com.postcode'
+version = '1.0.1'
+description = 'postcodes-io-java'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.eluder.coveralls:coveralls-maven-plugin:4.3.0'
+    compile 'org.slf4j:slf4j-api:1.7.30'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.json:json:20200518'
+    compile 'com.mashape.unirest:unirest-java:1.4.9'
+    testCompile 'junit:junit:4.13'
+    testCompile 'org.skyscreamer:jsonassert:1.5.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
