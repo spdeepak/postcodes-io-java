@@ -2,6 +2,6 @@ language: java
 jdk:
   - openjdk11
 sudo: required
-script: mvn clean verify
+script: gradle clean build
 after_success:
-  - mvn clean test jacoco:report coveralls:report
+  - gradle clean build jacoco:report coveralls:report
