@@ -1,15 +1,9 @@
 package com.postcode.io.initializers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
+import com.postcode.io.initializers.ReverseGeocoding.Reverse;
+import com.postcode.io.json.JsonFetcher;
 import org.json.JSONException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -17,10 +11,15 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
-import com.postcode.io.initializers.ReverseGeocoding.Reverse;
-import com.postcode.io.json.JsonFetcher;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Deepak
@@ -62,7 +61,7 @@ public class PostcodeLookupTest {
     }
 
     @Test
-    public void testReverseGeocodings() throws MalformedURLException, UnirestException, IOException {
+    public void testReverseGeocodings() throws UnirestException, IOException, JSONException {
         List<Reverse> reverseList = new ArrayList<>();
         ReverseGeocoding reverseGeocoding = new ReverseGeocoding();
         Reverse reverse = reverseGeocoding.new Reverse();
