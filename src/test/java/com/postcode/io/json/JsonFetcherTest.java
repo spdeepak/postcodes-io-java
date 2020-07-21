@@ -65,15 +65,15 @@ public class JsonFetcherTest {
         assertEquals("Filton", (result.getString("parish")));
         assertEquals(JSONObject.NULL, result.get("admin_county"));
         assertEquals("Filton", (result.getString("admin_ward")));
-        assertEquals("NHS South Gloucestershire", (result.getString("ccg")));
+        assertEquals("NHS Bristol, North Somerset and South Gloucestershire", (result.getString("ccg")));
         assertEquals("Bath and North East Somerset, North Somerset and South Gloucestershire",
                 (result.getString("nuts")));
         JSONObject codes = result.getJSONObject("codes");
         assertEquals("E06000025", (codes.getString("admin_district")));
         assertEquals("E99999999", (codes.getString("admin_county")));
-        assertEquals("E05002055", (codes.getString("admin_ward")));
+        assertEquals("E05012113", (codes.getString("admin_ward")));
         assertEquals("E04001052", (codes.getString("parish")));
-        assertEquals("E38000155", (codes.getString("ccg")));
+        assertEquals("E38000222", (codes.getString("ccg")));
         assertEquals("UKK12", (codes.getString("nuts")));
     }
 

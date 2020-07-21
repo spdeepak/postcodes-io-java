@@ -1,13 +1,12 @@
 package com.postcode.io;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import com.postcode.io.initializers.PostcodeLookup;
+import org.junit.Test;
 
 import java.net.MalformedURLException;
 
-import org.junit.Test;
-
-import com.postcode.io.initializers.PostcodeLookup;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Deepak
@@ -38,14 +37,14 @@ public class PostCodeDetailsTest {
         assertEquals("Filton", postCodeDetails.getParish());
         assertFalse(postCodeDetails.getAdmin_county());
         assertEquals("Filton", postCodeDetails.getAdmin_ward());
-        assertEquals("NHS South Gloucestershire", postCodeDetails.getCcg());
+        assertEquals("NHS Bristol, North Somerset and South Gloucestershire", postCodeDetails.getCcg());
         assertEquals("Bath and North East Somerset, North Somerset and South Gloucestershire",
                 postCodeDetails.getNuts());
         assertEquals("E06000025", postCodeDetails.getCodes().getAdmin_district());
         assertEquals("E99999999", postCodeDetails.getCodes().getAdmin_county());
-        assertEquals("E05002055", postCodeDetails.getCodes().getAdmin_ward());
+        assertEquals("E05012113", postCodeDetails.getCodes().getAdmin_ward());
         assertEquals("E04001052", postCodeDetails.getCodes().getParish());
-        assertEquals("E38000155", postCodeDetails.getCodes().getCcg());
+        assertEquals("E38000222", postCodeDetails.getCodes().getCcg());
         assertEquals("UKK12", postCodeDetails.getCodes().getNuts());
     }
 

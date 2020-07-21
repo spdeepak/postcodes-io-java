@@ -1,77 +1,73 @@
 package com.postcode.io.json;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.zip.GZIPInputStream;
-
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.zip.GZIPInputStream;
 
 /**
- * 
  * Fetch Json From URL
- * 
- * @author Deepak
  *
+ * @author Deepak
  */
+@Slf4j
 public class JsonFetcher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonFetcher.class);
+    private JsonFetcher() {
+    }
 
     /**
      * Pass {@link URL} to get {@link JSONObject} from it
-     * 
-     * @param urlString
+     *
+     * @param url
      * @return
      */
-    public static JSONObject urlToJson(URL urlString) {
-        StringBuilder sb = null;
-        URL url;
-        URLConnection urlCon;
+    public static JSONObject urlToJson(URL url) {
+        URLConnection urlConnection;
         try {
-            url = urlString;
-            urlCon = url.openConnection();
-            BufferedReader in;
-            if (urlCon.getHeaderField("Content-Encoding") != null
-                    && urlCon.getHeaderField("Content-Encoding").equals("gzip")) {
-                LOGGER.info("reading data from URL as GZIP Stream");
-                in = new BufferedReader(new InputStreamReader(new GZIPInputStream(urlCon.getInputStream())));
+            urlConnection = url.openConnection();
+            BufferedReader bufferedReader;
+            if (urlConnection.getHeaderField(HTTP.CONTENT_ENCODING) != null && urlConnection.getHeaderField(HTTP.CONTENT_ENCODING)
+                    .equals("gzip")) {
+                log.info("reading data from URL as GZIP Stream");
+                bufferedReader = new BufferedReader(new InputStreamReader(new GZIPInputStream(urlConnection.getInputStream())));
             } else {
-                LOGGER.info("reading data from URL as InputStream");
-                in = new BufferedReader(new InputStreamReader(urlCon.getInputStream()));
+                log.info("reading data from URL as InputStream");
+                bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             }
             String inputLine;
-            sb = new StringBuilder();
+            StringBuilder stringBuilder = new StringBuilder();
 
-            while ((inputLine = in.readLine()) != null) {
-                sb.append(inputLine);
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                stringBuilder.append(inputLine);
             }
-            in.close();
+            bufferedReader.close();
+            return new JSONObject(stringBuilder.toString());
         } catch (IOException e) {
-            LOGGER.info("Exception while reading JSON from URL - {}", e);
-        }
-        if (sb != null) {
-            return new JSONObject(sb.toString());
-        } else {
+            log.info("Exception while reading JSON from URL: {}. Stacktrace: {}", e.getMessage(), e.getStackTrace());
             return new JSONObject("");
         }
     }
 
     /**
      * Gets {@link JSONObject} from given {@link URL} & {@link JSONObject} via POST
-     * 
+     *
      * @param url
      * @param jsonObject
      * @return
@@ -79,47 +75,51 @@ public class JsonFetcher {
      * @throws Exception
      */
     public static JSONObject postURLToJson(URL url, JSONObject jsonObject) throws IOException {
-        StringEntity input = null;
-        HttpPost postRequest = null;
-        CloseableHttpClient httpClient = null;
-        HttpResponse response = null;
-        BufferedReader br = null;
-        StringBuilder sb = null;
+
         try {
-            LOGGER.info("Create POST Input");
-            input = new StringEntity(jsonObject.toString());
-            input.setContentType("application/json;charset=UTF-8");
-            input.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-            LOGGER.info("Creating POST Request");
-            postRequest = new HttpPost(url.toString());
-            postRequest.setEntity(input);
-            postRequest.setHeader("Accept", "application/json");
-            postRequest.setEntity(input);
-            LOGGER.info("Creating HTTPClient");
-            httpClient = HttpClientBuilder.create().build();
-            LOGGER.info("Executing PostRequest");
-            response = httpClient.execute(postRequest);
-            LOGGER.info("creating BufferedReader");
-            br = new BufferedReader(new InputStreamReader((response.getEntity().getContent())));
+            StringEntity input = createStringEntity(jsonObject);
+            HttpPost postRequest = createHttpPost(url, input);
+
+            CloseableHttpClient httpClient = HttpClientBuilder.create()
+                    .build();
+            log.info("Executing PostRequest");
+            HttpResponse response = httpClient.execute(postRequest);
+            log.info("creating BufferedReader");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader((response.getEntity()
+                    .getContent())));
+            StringBuilder stringBuilder = new StringBuilder();
             String output;
-            sb = new StringBuilder();
-            while ((output = br.readLine()) != null) {
-                LOGGER.info("Appending JSON to String  Builder");
-                sb.append(output);
+            while ((output = bufferedReader.readLine()) != null) {
+                log.info("Appending JSON to String  Builder");
+                stringBuilder.append(output);
             }
-            LOGGER.info("Closing HTTP Connection");
+            log.info("Closing HTTP Connection");
             httpClient.close();
+            bufferedReader.close();
+            return new JSONObject(stringBuilder.toString());
         } catch (MalformedURLException e) {
-            LOGGER.info("URL is Malformed {}", e);
+            log.info("URL is Malformed: {}", e.getMessage());
             throw new MalformedURLException(e.toString());
         } catch (IOException e) {
-            LOGGER.info("Error while reading JSON from URL", e);
+            log.info("Error while reading JSON from URL: {}", e.getMessage());
             throw new IOException(e.toString());
         }
-        if (sb != null) {
-            return new JSONObject(sb.toString());
-        } else {
-            return new JSONObject("");
-        }
+    }
+
+    private static StringEntity createStringEntity(JSONObject jsonObject) throws UnsupportedEncodingException {
+        log.info("Creating String Entity POST Input");
+        StringEntity input = new StringEntity(jsonObject.toString());
+        input.setContentType(ContentType.APPLICATION_JSON.toString());
+        input.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString()));
+        return input;
+    }
+
+    private static HttpPost createHttpPost(final URL url, final StringEntity input) {
+        log.info("Creating POST Request");
+        HttpPost postRequest = new HttpPost(url.toString());
+        postRequest.setEntity(input);
+        postRequest.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+        postRequest.setEntity(input);
+        return postRequest;
     }
 }
