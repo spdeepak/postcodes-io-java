@@ -22,8 +22,7 @@ public class PostcodeLookup {
     private String[] postcodes;
 
     /**
-     * Lookup a postcode. Returns all available data if found. Returns 404 if postcode does not
-     * exist.
+     * Lookup a postcode. Returns all available data if found. Returns 404 if postcode does not exist.
      *
      * @param postCode
      * @return
@@ -73,8 +72,7 @@ public class PostcodeLookup {
     }
 
     /**
-     * Convenience method to validate a postcode. Returns true or false (meaning valid or invalid
-     * respectively)
+     * Convenience method to validate a postcode. Returns true or false (meaning valid or invalid respectively)
      *
      * @param postcode
      * @return
@@ -106,8 +104,7 @@ public class PostcodeLookup {
     }
 
     /**
-     * Geolocation data for the centroid of the outward code specified. The outward code represents
-     * the first half of any postcode (separated by a space).
+     * Geolocation data for the centroid of the outward code specified. The outward code represents the first half of any postcode (separated by a space).
      *
      * @param outwardCode
      * @return
@@ -135,18 +132,6 @@ public class PostcodeLookup {
      */
     public static OutcodeReverseGeocoding outcodeReverseGeocoding(Double longitude, Double latitude) {
         return new OutcodeReverseGeocoding(String.valueOf(longitude), String.valueOf(latitude));
-    }
-
-    public String getPostcode() {
-        return postcode;
-    }
-
-    public String[] getPostcodes() {
-        return postcodes;
-    }
-
-    public String getUrl() {
-        return url;
     }
 
 }
